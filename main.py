@@ -1,5 +1,6 @@
+import get_data.retrieve_data as get_data
 
-print("hello, world!")
 
-
+# output the api request from NOAA
+get_data.download_dataset()
 

@@ -1,4 +1,5 @@
 import get_data.retrieve_data as get_data
+import ml_training.process_data as process_data
 import os
 
 base_url = "https://www.ncei.noaa.gov/data/global-summary-of-the-month/access/"
@@ -16,5 +17,9 @@ try:
 except Exception as e:
     print(f"error downloading data: {e}")
 
+try:
+    all_features, all_data = process_data.get_features(save_path)
+except Exception as e:
+    print(f"error when processing features: {e}")
 
 

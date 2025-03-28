@@ -17,9 +17,16 @@ try:
 except Exception as e:
     print(f"error downloading data: {e}")
 
+all_features, all_data = [], []
 try:
-    all_features, all_data = process_data.get_features(save_path)
+    all_features, all_data = process_data.get_data(save_path)
+    print(f"length of all data: {len(all_data)}")
 except Exception as e:
     print(f"error when processing features: {e}")
+
+if not all_features or not all_data:
+    print("error - no data found")
+else:
+    training_data, testing_data = process_data.separate_sets(all_data)
 
 

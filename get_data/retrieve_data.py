@@ -15,14 +15,15 @@ def send_request(url=base_url, save_dir='data', filename=base_url):
 
 def get_dataset(url=base_url, save_dir='data', filename=base_url):
     print("get dataset: " + url)
-    stations = csv_to_str(os.getcwd() + r'\data\arizona_maricopa_stations.csv')
-    print("stations:\n", stations)
+    # station_ids = csv_to_str(os.getcwd() + r'\data\arizona_maricopa_stations.csv')
+    station_ids = ["GHCND:USW00003184"]  # phoenix deer valley muni airport
+    print(station_ids)
 
-    params = {
-        "startdate": "2017-01-01",
-        "enddate": "2021-01-01",
-        "stationid": "GHCND:USC00020060"
-    }
+    params = [
+        ("startdate", "2017-01-01"),
+        ("enddate", "2021-01-01"),
+        ("enddate", "2021-01-01")
+    ]
 
     response = requests.get(url, headers=headers, params=params)
     print(response.text)
@@ -30,15 +31,11 @@ def get_dataset(url=base_url, save_dir='data', filename=base_url):
 
 def csv_to_str(path, save=False):
     print("path of csv file: " + path)
-    data = ""
+    data = []
     with open(path, 'r') as f:
         reader = csv.reader(f)
-        i = 0
         for row in reader:
-            if i > 0:
-                data += row[0]
-                data += ' & '
-                break
+            data.append(row[0])
 
     return data
 

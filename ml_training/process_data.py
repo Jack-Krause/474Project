@@ -2,7 +2,10 @@ import os
 import csv
 import random
 
-def get_data(data_path, write_file=False):
+import numpy as np
+import pandas as pd
+
+def load_data(data_path, write_file=False, write_path=None):
     features_array = []
     data = []
     if os.path.isfile(data_path):
@@ -19,10 +22,34 @@ def get_data(data_path, write_file=False):
                     print(f"data row: {row}")
 
                 i += 1
+
+            features_array = np.array(features_array)
+            data = np.array(data)
+
+            if write_file and write_path:
+                np.save(write_path + "/data.npy", data)
+                np.save(write_path + "/feature_names.npy", features_array)
+
             return features_array, data
 
     else:
         raise FileNotFoundError("csv file not found")
+
+
+def get_selected_features(data_path, features_arr, write_file=False, write_path=None):
+    data = []
+    print(f"features chosen: {features_arr}")
+
+    if os.path.isfile(data_path):
+        print(f"choosing columns: {data_path}")
+        df = pd.read_csv(data_path, usecols=features_arr)
+        data = df.to_numpy()
+
+        if write_file and write_path:
+
+            np.save(write_path + "/selected_data.npy", data)
+
+    return data
 
 
 def separate_sets(data_arr, seed=42):

@@ -1,8 +1,10 @@
 # CS4740 Machine Learning Project
-Weather predictions using Machine Learning models
+Locating roads to target for future concrete projects
 
-## Data Used
-Data used for this project is from NOAA Climate Data Online Local Climatological Data.
-[Permission From NOAA](https://www.noaa.gov/big-data-project-frequently-asked-questions)
+## Data from Iowa DOT Pavement Management Information Systems (PMIS)
 
+## Cost Estimation for Road Work
+
+## Data Attribution
+Dataset originally published by Iowa DOT GIS Team, licensed under CC BY 4.0. Modifications may have been made.
 

@@ -1,7 +1,7 @@
 import get_data.retrieve_data as get_data
 import ml_training.process_data as process_data
 import os
-
+import numpy as np
 
 root_dir = os.environ.get("ROOT_DIR")
 dataloc = os.path.join(root_dir, "data", "Pavement.csv")
@@ -15,19 +15,32 @@ if not os.path.isfile(dataloc):
 
 data, feature_names = get_data.parse_csv(dataloc, save_headers=True)
 
-
 print(feature_names[:20])
 print(data[:20])
 
 print(f"total data: {len(data)}")
 
+# custom_target = process_data.compute_target(
+#     data,
+#     feature_conditions=[
+#         "AADT > 10000",
+#         "STRUCT_NEED80 > 1",
+#         "IRI_INDX >= 3"
+#     ]
+# )
 custom_target = process_data.compute_target(
     data,
-    feature_conditions = [
-        "AADT > 10000",
-        "STRUCT_NEED80 > 1",
-        "IRI_INDX >= 3"
+    feature_conditions=[
+        "AADT > 1000",
     ]
 )
 
 print(f"custom target: \n {custom_target}")
+print(np.shape(custom_target))
+print(f"cumulative sum: \n{custom_target.cumsum()}")
+print(f"cumulative max: \n{custom_target.cummax()}")
+print(f"cumulative min: \n{custom_target.cummin()}")
+print(f"cumulative mean: \n{custom_target.mean()}")
+print(f"stats:\n{custom_target.describe()}")
+print(f"memory usage:\n{custom_target.memory_usage()}")
+

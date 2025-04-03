@@ -3,6 +3,7 @@ import os
 import requests
 import pandas as pd
 import json
+import random
 
 
 def parse_csv(path, save_headers=False, chosen_features=None, save=False):

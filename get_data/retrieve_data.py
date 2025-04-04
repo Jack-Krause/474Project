@@ -21,7 +21,6 @@ def parse_csv(path, save_headers=False, chosen_features=None, save=False):
         return data, header_row
 
 
-
 def save_headers_json(path, save_path):
     os.makedirs(save_path, exist_ok=True)
     data = pd.read_csv(path, low_memory=False)

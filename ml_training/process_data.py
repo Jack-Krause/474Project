@@ -1,12 +1,14 @@
 import os
 import csv
 import random
-
+from sklearn import linear_model
+from sklearn import metrics
 import numpy as np
 import pandas as pd
 
 
 def extract_features(data, feature_conditions):
+    # return pd.Series(True, index=data.index)
     return data[feature_conditions]
 
 
@@ -79,8 +81,15 @@ def separate_sets(data_arr, seed=42):
     return training_arr, testing_arr
 
 
+def train_lr_model(x_train, y_train):
+    model = linear_model.LinearRegression()
+    model.fit(x_train, y_train)
+    return model
 
 
+def test_lr_model(model, x_test, y_test):
+    y_predictions = model.predict()
+    mse_error = metrics.mean_squared_error(y_test, y_predictions)
 
 
 

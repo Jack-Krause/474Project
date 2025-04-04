@@ -119,7 +119,11 @@ def aggregate_target(y_matrix):
 
 
 def plot_histogram(x_vector, label=None, save_path=None):
+    min_x = x_vector.min()
+    max_x = x_vector.max()
+    plt.xlim(min_x, max_x)
     plt.hist(x_vector, bins=100)
+
     if label:
         plt.title(label)
     plt.show()

@@ -28,16 +28,7 @@ else:
 print(f"total data: {len(data)}")
 print(f"total data arr: \n{data}\n")
 
-target_data = process_data.extract_features(
-    data,
-    feature_conditions=[
-        "CRACK_INDX",
-        "FAULT_INDX",
-        "IRI_INDX",
-        "STRUCT_NEED80"
-    ]
-)
-
+# X
 predictor_data = process_data.extract_features(
     data,
     feature_conditions=[
@@ -48,11 +39,23 @@ predictor_data = process_data.extract_features(
     ]
 )
 
+# Y
+target_data = process_data.extract_features(
+    data,
+    feature_conditions=[
+        "CRACK_INDX",
+        "FAULT_INDX",
+        "IRI_INDX",
+        "STRUCT_NEED80"
+    ]
+)
 
 x_vectors = predictor_data.to_numpy()
 y_vectors = target_data.to_numpy()
 x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)
 
+
+process_data.plot_histogram(x_vectors[0])
 
 print(f"target features: \n{target_data}\n")
 print(f"x features: \n{predictor_data}\n")

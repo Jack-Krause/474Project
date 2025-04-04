@@ -5,6 +5,7 @@ from sklearn import linear_model
 from sklearn import metrics
 import numpy as np
 import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
 
 
@@ -99,7 +100,9 @@ def separate_sets(data_arr, seed=42):
     return training_arr, testing_arr
 
 
-def train_lr_model(x_train, y_train):
+def train_lr_model(x_train, y_train, pca=False):
+    # if pca:
+        # x_train = PCA(x_train)
     model = linear_model.LinearRegression()
     model.fit(x_train, y_train)
     return model
@@ -107,9 +110,24 @@ def train_lr_model(x_train, y_train):
 
 def test_lr_model(model, x_test, y_test):
     y_predictions = model.predict(x_test)
-    mse_error = metrics.mean_squared_error(y_test, y_predictions)
+    # mse_error = metrics.mean_squared_error(y_test, y_predictions)
+    rmse_error = metrics.root_mean_squared_error(y_test, y_predictions)
 
-    return mse_error
+    return round(rmse_error, 3)
+
+
+def aggregate_target(y_matrix):
+    pass
+
+
+def plot_histogram(x_vector, save_path=None):
+    plt.hist(x_vector, bins=10)
+    plt.show()
+
+    # if save_path:
+
+
+
 
 
 

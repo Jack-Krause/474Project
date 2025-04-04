@@ -101,8 +101,6 @@ def separate_sets(data_arr, seed=42):
 
 
 def train_lr_model(x_train, y_train, pca=False):
-    # if pca:
-        # x_train = PCA(x_train)
     model = linear_model.LinearRegression()
     model.fit(x_train, y_train)
     return model
@@ -120,11 +118,14 @@ def aggregate_target(y_matrix):
     pass
 
 
-def plot_histogram(x_vector, save_path=None):
-    plt.hist(x_vector, bins=10)
+def plot_histogram(x_vector, label=None, save_path=None):
+    plt.hist(x_vector, bins=100)
+    if label:
+        plt.title(label)
     plt.show()
 
-    # if save_path:
+    if save_path:
+        plt.savefig(save_path)
 
 
 

@@ -55,7 +55,14 @@ y_vectors = target_data.to_numpy()
 x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)
 
 
-process_data.plot_histogram(x_vectors[0])
+# process_data.plot_histogram(x_vectors[0])
+for header in data:
+    print(f"headers are -> {header[:10]}")
+    process_data.plot_histogram(
+            x_vector=data[header],
+            label=header,
+            save_path=os.path.join(parsed_data_dir, header + "data")
+    )
 
 print(f"target features: \n{target_data}\n")
 print(f"x features: \n{predictor_data}\n")

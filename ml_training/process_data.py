@@ -5,6 +5,7 @@ from sklearn import linear_model
 from sklearn import metrics
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def extract_features(data, feature_conditions):
@@ -88,8 +89,32 @@ def train_lr_model(x_train, y_train):
 
 
 def test_lr_model(model, x_test, y_test):
-    y_predictions = model.predict()
+    y_predictions = model.predict(x_test)
     mse_error = metrics.mean_squared_error(y_test, y_predictions)
+
+    if x_test.shape[1] != 1:
+        print("Cannot plot: More than one feature in x_test.")
+        return mse_error
+
+    # Reshape to 1D for plotting
+    x_flat = x_test[:, 0]
+
+    # Sort by x for smooth line
+    sort_idx = np.argsort(x_flat)
+    x_sorted = x_flat[sort_idx]
+    y_sorted = y_predictions[sort_idx]
+
+    # Plot
+    plt.scatter(x_flat, y_test, label='True Data', color='blue')
+    plt.plot(x_sorted, y_sorted, label='Regression Line', color='red')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.legend()
+    plt.title('Linear Regression')
+    plt.show()
+
+    return mse_error
+
 
 
 

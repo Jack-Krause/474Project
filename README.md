@@ -6,7 +6,7 @@ This is a proof-of-concept project for showcasing how ML can be leveraged in dif
 Dataset originally published by Iowa DOT GIS Team, licensed under CC BY 4.0. Modifications may have been made.
 
 ## Results
-Easy-to-read results will be posted ASAP.
+Easy-to-read results will be posted ASAP. This is a new project.
 
 ## TL;DR
 Using real DOT road data such as traffic volume, construction/resurface date, traffic size to predict the condition of the roads in the future.

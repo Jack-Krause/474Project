@@ -6,12 +6,18 @@ import numpy as np
 import pandas as pd
 
 
-def compute_target(data, feature_conditions=None):
-    mask = pd.Series(True, index=data.index)
-    for feature_cond in feature_conditions:
-        mask &= data.eval(feature_cond)
+def extract_features(data, feature_conditions):
+    return data[feature_conditions]
 
-    return mask.astype(int)
+
+def compute_vector(data, feature_conditions=None):
+    if feature_conditions:
+        mask = pd.Series(True, index=data.index)
+
+        for feature_cond in feature_conditions:
+            mask &= data.eval(feature_cond)
+
+        return mask.astype(int)
 
 
 def load_data(data_path, write_file=False, write_path=None):

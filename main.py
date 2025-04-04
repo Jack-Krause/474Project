@@ -14,33 +14,33 @@ if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
 data, feature_names = get_data.parse_csv(dataloc, save_headers=True)
+data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
 
-print(feature_names[:20])
-print(data[:20])
-
+# print(feature_names[:20])
+# print(data[:20])
 print(f"total data: {len(data)}")
 
-# custom_target = process_data.compute_target(
-#     data,
-#     feature_conditions=[
-#         "AADT > 10000",
-#         "STRUCT_NEED80 > 1",
-#         "IRI_INDX >= 3"
-#     ]
-# )
-custom_target = process_data.compute_target(
+target_features = process_data.extract_features(
     data,
     feature_conditions=[
-        "AADT > 1000",
+        "CRACK_INDX",
+        "FAULT_INDX",
+        "IRI_INDX",
+        "STRUCT_NEED80"
     ]
 )
 
-print(f"custom target: \n {custom_target}")
-print(np.shape(custom_target))
-print(f"cumulative sum: \n{custom_target.cumsum()}")
-print(f"cumulative max: \n{custom_target.cummax()}")
-print(f"cumulative min: \n{custom_target.cummin()}")
-print(f"cumulative mean: \n{custom_target.mean()}")
-print(f"stats:\n{custom_target.describe()}")
-print(f"memory usage:\n{custom_target.memory_usage()}")
+x_features = process_data.extract_features(
+    data,
+    feature_conditions=[
+        "AADT",
+        "TRUCKS",
+        "CONYR",
+        "RESYR"
+        ""
+    ]
+)
+
+print(f"target features: \n{target_features}\n")
+print(f"x features: \n{x_features}")
 

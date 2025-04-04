@@ -14,11 +14,11 @@ def parse_csv(path, save_headers=False, chosen_features=None, save=False):
     if save_headers:
         save_headers_json(path, parsed_data_dir)
 
-    with open(os.path.join(parsed_data_dir, "headers.json")) as headers_json:
+    with open(os.path.join(parsed_data_dir, "headers.json"), 'r') as headers_json:
         headers_obj = json.load(headers_json)
         data = pd.read_csv(path, dtype=headers_obj)
         header_row = data.columns.tolist()
-        return data, header_row
+        return data, headers_obj
 
 
 def save_headers_json(path, save_path):

@@ -22,6 +22,8 @@ def compute_vector(data, feature_conditions=None):
 
         return mask.astype(int)
 
+    return None
+
 
 def load_data(data_path, write_file=False, write_path=None):
     features_array = []
@@ -52,6 +54,21 @@ def load_data(data_path, write_file=False, write_path=None):
 
     else:
         raise FileNotFoundError("csv file not found")
+
+
+def remove_empty_cells(data, dtypes):
+    for col, dtype in dtypes.items():
+        if 'int' in dtype:
+            data[col] = data[col].fillna(0).astype('Int64')
+        elif 'float' in dtype:
+            data[col] = data[col].fillna(0.0)
+        elif dtype == 'bool':
+            data[col] = data[col].fillna(False).astype('bool')
+        elif dtype == 'object':
+            data[col] = data[col].replace('', np.nan).fillna('N/A')
+
+    return data
+
 
 
 def get_selected_features(data_path, features_arr, write_file=False, write_path=None):

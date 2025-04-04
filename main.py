@@ -1,7 +1,7 @@
-import get_data.retrieve_data as get_data
-import ml_training.process_data as process_data
 import os
 import numpy as np
+import get_data.retrieve_data as get_data
+from ml_training import process_data
 from sklearn import preprocessing
 
 root_dir = os.environ.get("ROOT_DIR")
@@ -14,12 +14,16 @@ if not os.path.isdir(parsed_data_dir):
 if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
-data, feature_names = get_data.parse_csv(dataloc, save_headers=True)
+data, features_json = get_data.parse_csv(dataloc, save_headers=True)
+
 data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
-print("is null rows")
+data = process_data.remove_empty_cells(data, features_json)
+
 rows_with_nan = data[data.isna().any(axis=1)]
-print(rows_with_nan)
-# exit(-1)
+if rows_with_nan.empty:
+    print("no empty rows in dataframe")
+else:
+    print(f"nan rows: \n{rows_with_nan}\n")
 
 print(f"total data: {len(data)}")
 print(f"total data arr: \n{data}\n")
@@ -37,7 +41,7 @@ target_data = process_data.extract_features(
 predictor_data = process_data.extract_features(
     data,
     feature_conditions=[
-        # "AADT",
+        "AADT",
         "CONYR",
         "RESYR",
         "years_since_repair"
@@ -58,6 +62,6 @@ x_train, x_test = process_data.separate_sets(x_scaled)
 y_train, y_test = process_data.separate_sets(y_vectors)
 
 linear_regression_model = process_data.train_lr_model(x_train=x_train, y_train=y_train)
-acc = process_data.test_lr_model(linear_regression_model, x_test=x_test, y_test=y_test)
+error = process_data.test_lr_model(linear_regression_model, x_test=x_test, y_test=y_test)
 
-print(f"accuracy: {acc}%")
+print(f"calculate error: {error}")

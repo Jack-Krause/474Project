@@ -5,7 +5,7 @@ from ml_training import process_data
 from sklearn import preprocessing
 
 root_dir = os.environ.get("ROOT_DIR")
-dataloc = os.path.join(root_dir, "data", "pave3.csv")
+dataloc = os.path.join(root_dir, "data", "data_new_uncleaned.csv")
 parsed_data_dir = os.path.join(root_dir, "parsed_data")
 
 if not os.path.isdir(parsed_data_dir):
@@ -17,7 +17,6 @@ if not os.path.isfile(dataloc):
 data, features_json = get_data.parse_csv(dataloc, save_headers=False)
 
 data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
-# data = process_data.remove_empty_cells(data, features_json)
 
 rows_with_nan = data[data.isna().any(axis=1)]
 if rows_with_nan.empty:

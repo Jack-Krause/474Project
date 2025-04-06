@@ -5,7 +5,7 @@ from ml_training import process_data
 from sklearn import preprocessing
 
 root_dir = os.environ.get("ROOT_DIR")
-dataloc = os.path.join(root_dir, "data", "pave.csv")
+dataloc = os.path.join(root_dir, "data", "pave3.csv")
 parsed_data_dir = os.path.join(root_dir, "parsed_data")
 
 if not os.path.isdir(parsed_data_dir):

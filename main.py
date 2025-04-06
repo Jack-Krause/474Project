@@ -14,10 +14,10 @@ if not os.path.isdir(parsed_data_dir):
 if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
-data, features_json = get_data.parse_csv(dataloc, save_headers=True)
+data, features_json = get_data.parse_csv(dataloc)
 
 data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
-data = process_data.remove_empty_cells(data, features_json)
+# data = process_data.remove_empty_cells(data, features_json)
 
 rows_with_nan = data[data.isna().any(axis=1)]
 if rows_with_nan.empty:
@@ -28,6 +28,7 @@ else:
 print(f"total data: {len(data)}")
 print(f"total data arr: \n{data}\n")
 
+exit(1)
 # X
 predictor_data = process_data.extract_features(
     data,

@@ -17,7 +17,7 @@ if not os.path.isfile(dataloc):
 data, features_json = get_data.parse_csv(dataloc, save_headers=False)
 
 data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
-data = process_data.remove_empty_cells(data, features_json)
+# data = process_data.remove_empty_cells(data, features_json)
 
 rows_with_nan = data[data.isna().any(axis=1)]
 if rows_with_nan.empty:

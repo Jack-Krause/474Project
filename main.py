@@ -21,7 +21,7 @@ columns_data = [
 ]
 
 data, features_json = get_data.parse_csv(dataloc,
-                                         save_headers=True,
+                                         save_headers=False,
                                          features_arr=columns_data
                                          )
 

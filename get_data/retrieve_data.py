@@ -12,7 +12,7 @@ def parse_csv(path, save_headers=False, features_arr=None):
     root_dir = os.environ.get("ROOT_DIR")
     parsed_data_dir = os.path.join(root_dir, "parsed_data")
     if save_headers:
-        save_headers_json(path, parsed_data_dir)
+        save_headers_json(path, parsed_data_dir, features_arr)
 
     with open(os.path.join(parsed_data_dir, "feature_headers.json"), 'r') as headers_json_file:
         headers_obj = json.load(headers_json_file)
@@ -26,18 +26,15 @@ def parse_csv(path, save_headers=False, features_arr=None):
         return data, headers_obj
 
 
-def save_headers_json(path, save_path):
+def save_headers_json(path, save_path, features_arr=None):
     os.makedirs(save_path, exist_ok=True)
     data = pd.read_csv(path, low_memory=False)
     dtypes_dict = data.dtypes.apply(lambda dt: dt.name).to_dict()
+
+    if features_arr:
+        dtypes_dict = {col: dtypes_dict[col] for col in features_arr if col in dtypes_dict}
 
     with open(os.path.join(save_path, "read_features.json"), "w") as f:
         json.dump(dtypes_dict, f, indent=4)
 
 
-def download_csv_data(url, save_path):
-    response = requests.get(url)
-    response.raise_for_status()
-
-    with open(save_path, "wb") as f:
-        f.write(response.content)

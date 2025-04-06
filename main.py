@@ -25,8 +25,9 @@ data, features_json = get_data.parse_csv(dataloc,
                                          features_arr=columns_data
                                          )
 
-data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
 data = process_data.remove_empty_cells(data, dtypes=features_json)
+data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
+data.to_csv(os.path.join(parsed_data_dir, "current_data.csv"), index=False)
 
 missing_headers = []
 for header in data.columns:
@@ -51,7 +52,6 @@ for i, (header, missing, zero) in enumerate(missing_headers, start=1):
     total = missing + zero
     print(header_format.format(i, header, total, missing, zero))
 
-exit(0)
 # X
 predictor_data = process_data.extract_features(
     data,

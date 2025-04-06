@@ -34,7 +34,7 @@ def save_headers_json(path, save_path, features_arr=None):
     if features_arr:
         dtypes_dict = {col: dtypes_dict[col] for col in features_arr if col in dtypes_dict}
 
-    with open(os.path.join(save_path, "read_features.json"), "w") as f:
+    with open(os.path.join(save_path, "feature_headers.json"), "w") as f:
         json.dump(dtypes_dict, f, indent=4)
 
 

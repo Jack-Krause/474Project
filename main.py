@@ -8,6 +8,7 @@ import pandas as pd
 root_dir = os.environ.get("ROOT_DIR")
 dataloc = os.path.join(root_dir, "data", "data_new_b.csv")
 parsed_data_dir = os.path.join(root_dir, "parsed_data")
+analysis_path = os.path.join(root_dir, "analysis")
 
 if not os.path.isdir(parsed_data_dir):
     os.mkdir(parsed_data_dir)
@@ -15,13 +16,16 @@ if not os.path.isdir(parsed_data_dir):
 if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
+if not os.path.isdir(analysis_path):
+    os.mkdir(analysis_path)
+
 
 columns_data = [
-    "AADT", "CONYR", "RESYR", "CRACK_INDX", "FAULT_INDX", "IRI_INDX", "STRUC80"
+    "AADT", "CONYR", "RESYR", "CRACK_INDX", "FAULT_INDX", "IRI_INDX", "STRUC80", "TRUCKS"
 ]
 
 data, features_json = get_data.parse_csv(dataloc,
-                                         save_headers=False,
+                                         save_headers=True,
                                          features_arr=columns_data
                                          )
 
@@ -52,51 +56,71 @@ for i, (header, missing, zero) in enumerate(missing_headers, start=1):
     total = missing + zero
     print(header_format.format(i, header, total, missing, zero))
 
-# X
-predictor_data = process_data.extract_features(
-    data,
-    feature_conditions=[
-        # "TRUCKS",
-        # "percentage_trucks
-        "AADT",
-        "CONYR",
-        "RESYR",
-        "years_since_repair"
-    ]
-)
 
-# Y
-target_data = process_data.extract_features(
-    data,
-    feature_conditions=[
-        "CRACK_INDX",
-        "FAULT_INDX", # lots missing
-        "IRI_INDX",
-        "STRUC80"
-    ]
-)
+x_1 = [
+    "AADT",
+    "CONYR",
+    "RESYR",
+    "years_since_repair"
+]
 
-x_vectors = predictor_data.to_numpy()
-y_vectors = target_data.to_numpy()
-x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)
+x_2 = [
+    "AADT",
+    "CONYR",
+    "RESYR",
+    "years_since_repair",
+    "TRUCKS"
+]
+
+y_1 = [
+    "CRACK_INDX",
+    "FAULT_INDX",  # lots missing
+    "IRI_INDX",
+    "STRUC80"
+]
 
 
-# for header in data:
-#     print(f"headers are -> {header[:10]}")
-#     process_data.plot_histogram(
-#             x_vector=data[header],
-#             label=header,
-#             save_path=os.path.join(parsed_data_dir, header + "data")
-#     )
+x_feature_sets = [x_1, x_2]
+y_feature_sets = [y_1]
 
-print(f"target features: \n{target_data}\n")
-print(f"x features: \n{predictor_data}\n")
-print(f"x scaled: \n{x_scaled}\n")
+for x_feature_set in x_feature_sets:
+    for y_feature_set in y_feature_sets:
+        # X
+        predictor_data = process_data.extract_features(
+            data,
+            feature_conditions=x_feature_set
+        )
 
-x_train, x_test = process_data.separate_sets(x_scaled)
-y_train, y_test = process_data.separate_sets(y_vectors)
+        # Y
+        target_data = process_data.extract_features(
+            data,
+            feature_conditions=y_feature_set
+        )
 
-linear_regression_model = process_data.train_lr_model(x_train=x_train, y_train=y_train)
-error = process_data.test_lr_model(linear_regression_model, x_test=x_test, y_test=y_test)
+        x_vectors = predictor_data.to_numpy()
+        y_vectors = target_data.to_numpy()
+        x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)
 
-print(f"calculate error: {error}")
+        # for header in data:
+        #     print(f"headers are -> {header[:10]}")
+        #     process_data.plot_histogram(
+        #             x_vector=data[header],
+        #             label=header,
+        #             save_path=os.path.join(parsed_data_dir, header + "data")
+        #     )
+
+        print(f"target features: \n{target_data}\n")
+        print(f"x features: \n{predictor_data}\n")
+        print(f"x scaled: \n{x_scaled}\n")
+
+        x_train, x_test = process_data.separate_sets(x_scaled)
+        y_train, y_test = process_data.separate_sets(y_vectors)
+
+        linear_regression_model = process_data.train_lr_model(x_train=x_train, y_train=y_train)
+        error = process_data.test_lr_model(linear_regression_model, x_test=x_test, y_test=y_test)
+
+        print(f"calculate error: {error}")
+        print("\n\n")
+
+
+

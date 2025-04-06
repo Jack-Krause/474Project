@@ -5,5 +5,6 @@
     "CRACK_INDX": "float64",
     "FAULT_INDX": "float64",
     "IRI_INDX": "float64",
-    "STRUC80": "float64"
+    "STRUC80": "float64",
+    "TRUCKS": "float64"
 }

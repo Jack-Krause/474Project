@@ -33,7 +33,7 @@ for header in data.columns:
 
     missing_headers.append([header, empty_count, zero_count])
 
-missing_headers.sort(key=lambda pt: pt[1] + pt[2], reverse=True)
+missing_headers.sort(key=lambda pt: pt[1] + pt[2], reverse=False)
 
 header_format = "{:>3}  {:<20}  {:>7}  {:>8}  {:>7}"
 print(header_format.format("No.", "Column", "Total", "Missing", "Zeros"))
@@ -42,16 +42,7 @@ print("-" * 55)
 for i, (header, missing, zero) in enumerate(missing_headers, start=1):
     total = missing + zero
     print(header_format.format(i, header, total, missing, zero))
-# rows_with_nan = data[data.isna().any(axis=1)]
-# if rows_with_nan.empty:
-#     print("no empty rows in dataframe")
-# else:
-#     print(f"nan rows: \n{rows_with_nan}\n")
 
-print(f"total data: {len(data)}")
-print(f"total data arr: \n{data}\n")
-
-exit(0)
 
 # X
 predictor_data = process_data.extract_features(
@@ -69,9 +60,9 @@ target_data = process_data.extract_features(
     data,
     feature_conditions=[
         "CRACK_INDX",
-        "FAULT_INDX",
+        "FAULT_INDX", # lots missing
         "IRI_INDX",
-        "STRUCT_NEED80"
+        "STRUC80"
     ]
 )
 

@@ -17,7 +17,6 @@ def parse_csv(path, save_headers=False, chosen_features=None, save=False):
     with open(os.path.join(parsed_data_dir, "headers.json"), 'r') as headers_json:
         headers_obj = json.load(headers_json)
         data = pd.read_csv(path, dtype=headers_obj)
-        header_row = data.columns.tolist()
         return data, headers_obj
 
 

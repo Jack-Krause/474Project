@@ -3,6 +3,7 @@ import numpy as np
 import get_data.retrieve_data as get_data
 from ml_training import process_data
 from sklearn import preprocessing
+import pandas as pd
 
 root_dir = os.environ.get("ROOT_DIR")
 dataloc = os.path.join(root_dir, "data", "data_new_b.csv")
@@ -17,15 +18,40 @@ if not os.path.isfile(dataloc):
 data, features_json = get_data.parse_csv(dataloc, save_headers=False)
 
 data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
+# data = process_data.remove_empty_cells(data, dtypes=features_json)
 
-rows_with_nan = data[data.isna().any(axis=1)]
-if rows_with_nan.empty:
-    print("no empty rows in dataframe")
-else:
-    print(f"nan rows: \n{rows_with_nan}\n")
+missing_headers = []
+for header in data.columns:
+    zero_count = 0
+    empty_count = 0
+    for cell in data[header]:
+
+        if pd.isna(cell) or cell == "" or cell is None:
+            empty_count += 1
+        if cell == 0 or cell == 0.0:
+            zero_count += 1
+
+    missing_headers.append([header, empty_count, zero_count])
+
+missing_headers.sort(key=lambda pt: pt[1] + pt[2], reverse=True)
+
+header_format = "{:>3}  {:<20}  {:>7}  {:>8}  {:>7}"
+print(header_format.format("No.", "Column", "Total", "Missing", "Zeros"))
+print("-" * 55)
+
+for i, (header, missing, zero) in enumerate(missing_headers, start=1):
+    total = missing + zero
+    print(header_format.format(i, header, total, missing, zero))
+# rows_with_nan = data[data.isna().any(axis=1)]
+# if rows_with_nan.empty:
+#     print("no empty rows in dataframe")
+# else:
+#     print(f"nan rows: \n{rows_with_nan}\n")
 
 print(f"total data: {len(data)}")
 print(f"total data arr: \n{data}\n")
+
+exit(0)
 
 # X
 predictor_data = process_data.extract_features(

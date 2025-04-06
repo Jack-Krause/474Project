@@ -14,7 +14,7 @@ if not os.path.isdir(parsed_data_dir):
 if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
-data, features_json = get_data.parse_csv(dataloc, save_headers=True)
+data, features_json = get_data.parse_csv(dataloc, save_headers=False)
 
 data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
 data = process_data.remove_empty_cells(data, features_json)

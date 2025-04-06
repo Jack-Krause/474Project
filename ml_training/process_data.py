@@ -82,6 +82,7 @@ def get_selected_features(data_path, features_arr, write_file=False, write_path=
         data = df.to_numpy()
 
         if write_file and write_path:
+
             np.save(write_path + "/selected_data.npy", data)
 
     return data

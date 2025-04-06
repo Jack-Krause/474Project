@@ -117,18 +117,44 @@ def aggregate_target(y_matrix):
     pass
 
 
-def plot_histogram(x_vector, label=None, save_path=None):
-    min_x = x_vector.min()
-    max_x = x_vector.max()
-    plt.xlim(min_x, max_x)
-    plt.hist(x_vector, bins=100)
+def plot_lr_results(model, x_test, y_test, target_names=None):
+    """
+    Plots actual vs. predicted values for each target variable.
 
-    if label:
-        plt.title(label)
-    plt.show()
+    Parameters:
+      model: The trained linear regression model.
+      x_test: The test set predictors.
+      y_test: The true target values (as a 2D numpy array).
+      target_names: Optional list of target names. If None, generic names will be used.
+    """
+    import matplotlib.pyplot as plt
 
-    if save_path:
-        plt.savefig(save_path)
+    # Get predictions
+    y_pred = model.predict(x_test)
+
+    # Ensure y_test and y_pred are 2D arrays
+    if y_test.ndim == 1:
+        y_test = y_test.reshape(-1, 1)
+    if y_pred.ndim == 1:
+        y_pred = y_pred.reshape(-1, 1)
+
+    n_targets = y_test.shape[1]
+    if target_names is None:
+        target_names = [f"Target {i + 1}" for i in range(n_targets)]
+
+    # Create a scatter plot for each target variable
+    for i in range(n_targets):
+        plt.figure(figsize=(8, 6))
+        plt.scatter(y_test[:, i], y_pred[:, i], alpha=0.6, label="Predictions")
+        # Plot a reference line: perfect prediction line
+        min_val = min(y_test[:, i].min(), y_pred[:, i].min())
+        max_val = max(y_test[:, i].max(), y_pred[:, i].max())
+        plt.plot([min_val, max_val], [min_val, max_val], 'r--', label="Ideal")
+        plt.xlabel("Actual " + target_names[i])
+        plt.ylabel("Predicted " + target_names[i])
+        plt.title("Actual vs. Predicted " + target_names[i])
+        plt.legend()
+        plt.show()
 
 
 

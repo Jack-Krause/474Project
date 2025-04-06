@@ -125,6 +125,8 @@ for x_feature_set in x_feature_sets:
         linear_regression_model = process_data.train_lr_model(x_train=x_train, y_train=y_train)
         error = process_data.test_lr_model(linear_regression_model, x_test=x_test, y_test=y_test)
 
+        process_data.plot_lr_results(linear_regression_model, x_test, y_test, y_feature_set)
+
         print(f"calculate error: {error}")
         print("\n\n")
 

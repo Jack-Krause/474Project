@@ -15,10 +15,18 @@ if not os.path.isdir(parsed_data_dir):
 if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
-data, features_json = get_data.parse_csv(dataloc, save_headers=False)
+
+columns_data = [
+    "AADT", "CONYR", "RESYR", "CRACK_INDX", "FAULT_INDX", "IRI_INDX", "STRUC80"
+]
+
+data, features_json = get_data.parse_csv(dataloc,
+                                         save_headers=True,
+                                         features_arr=columns_data
+                                         )
 
 data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
-# data = process_data.remove_empty_cells(data, dtypes=features_json)
+data = process_data.remove_empty_cells(data, dtypes=features_json)
 
 missing_headers = []
 for header in data.columns:
@@ -43,11 +51,13 @@ for i, (header, missing, zero) in enumerate(missing_headers, start=1):
     total = missing + zero
     print(header_format.format(i, header, total, missing, zero))
 
-
+exit(0)
 # X
 predictor_data = process_data.extract_features(
     data,
     feature_conditions=[
+        # "TRUCKS",
+        # "percentage_trucks
         "AADT",
         "CONYR",
         "RESYR",

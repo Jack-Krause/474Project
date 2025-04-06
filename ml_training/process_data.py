@@ -71,7 +71,6 @@ def remove_empty_cells(data, dtypes):
     return data
 
 
-
 def get_selected_features(data_path, features_arr, write_file=False, write_path=None):
     data = []
     print(f"features chosen: {features_arr}")

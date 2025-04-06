@@ -6,7 +6,7 @@ import json
 import random
 
 
-def parse_csv(path, save_headers=False, chosen_features=None, save=False):
+def parse_csv(path, save_headers=False, features_arr=None):
     print("path of csv file: " + path)
 
     root_dir = os.environ.get("ROOT_DIR")
@@ -14,9 +14,15 @@ def parse_csv(path, save_headers=False, chosen_features=None, save=False):
     if save_headers:
         save_headers_json(path, parsed_data_dir)
 
-    with open(os.path.join(parsed_data_dir, "headers.json"), 'r') as headers_json:
-        headers_obj = json.load(headers_json)
-        data = pd.read_csv(path, dtype=headers_obj)
+    with open(os.path.join(parsed_data_dir, "feature_headers.json"), 'r') as headers_json_file:
+        headers_obj = json.load(headers_json_file)
+
+        if features_arr:
+            selected_dtypes = {col: headers_obj[col] for col in features_arr if col in headers_obj}
+            data = pd.read_csv(path, dtype=selected_dtypes, usecols=features_arr)
+        else:
+            data = pd.read_csv(path, dtype=headers_obj)
+
         return data, headers_obj
 
 
@@ -25,7 +31,7 @@ def save_headers_json(path, save_path):
     data = pd.read_csv(path, low_memory=False)
     dtypes_dict = data.dtypes.apply(lambda dt: dt.name).to_dict()
 
-    with open(os.path.join(save_path, "headers.json"), "w") as f:
+    with open(os.path.join(save_path, "read_features.json"), "w") as f:
         json.dump(dtypes_dict, f, indent=4)
 
 

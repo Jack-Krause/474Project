@@ -83,8 +83,14 @@ y_1 = [
 x_feature_sets = [x_1, x_2]
 y_feature_sets = [y_1]
 
+x_n, y_n = 0, 0
 for x_feature_set in x_feature_sets:
+    x_n += 1
+    y_n = 0
+
     for y_feature_set in y_feature_sets:
+        y_n += 1
+        print(f"\n\nModel: (x:{x_n}, y:{y_n})")
         # X
         predictor_data = process_data.extract_features(
             data,

@@ -80,7 +80,7 @@ y_1 = [
 
 x_feature_sets = [x_1, x_2]
 y_feature_sets = [y_1]
-model_name = "supportvectorregression"
+model_name = "linearregression"
 
 x_n, y_n = 0, 0
 for x_feature_set in x_feature_sets:
@@ -106,7 +106,6 @@ for x_feature_set in x_feature_sets:
         covariance_analysis.calculate_plot_covariance(predictor_data, title="cov of predictor")
         covariance_analysis.calculate_plot_covariance(target_data, title="cov of target")
 
-        exit(0)
         x_vectors = predictor_data.to_numpy()
         y_vectors = target_data.to_numpy()
         x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)

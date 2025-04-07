@@ -3,6 +3,7 @@ import csv
 import random
 from sklearn import linear_model
 from sklearn import metrics
+from sklearn import svm
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -99,8 +100,22 @@ def separate_sets(data_arr, seed=42):
     return training_arr, testing_arr
 
 
-def train_lr_model(x_train, y_train, pca=False):
-    model = linear_model.LinearRegression()
+def train_lr_model(x_train, y_train, model_name=None, pca=False):
+    model = None
+
+    if model_name is None:
+        model = linear_model.LinearRegression()
+    elif model_name.lower() == "linearregression":
+        model = linear_model.LinearRegression()
+    elif model_name.lower() == "supportvectorregression":
+        model = svm.SVR(kernel='poly')
+    else:
+        model = linear_model.LinearRegression()
+        print("Warning: model name default not found")
+
+
+    if model is None:
+        raise RuntimeError("Error creating model")
     model.fit(x_train, y_train)
     return model
 

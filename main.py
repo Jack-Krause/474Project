@@ -1,23 +1,21 @@
 import os
 import numpy as np
 import get_data.retrieve_data as get_data
+from analysis import covariance_analysis
 from ml_training import process_data
+from sklearn.pipeline import make_pipeline
 from sklearn import preprocessing
 import pandas as pd
 
 root_dir = os.environ.get("ROOT_DIR")
 dataloc = os.path.join(root_dir, "data", "data_new_b.csv")
 parsed_data_dir = os.path.join(root_dir, "parsed_data")
-analysis_path = os.path.join(root_dir, "analysis")
 
 if not os.path.isdir(parsed_data_dir):
     os.mkdir(parsed_data_dir)
 
 if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
-
-if not os.path.isdir(analysis_path):
-    os.mkdir(analysis_path)
 
 
 columns_data = [
@@ -82,6 +80,7 @@ y_1 = [
 
 x_feature_sets = [x_1, x_2]
 y_feature_sets = [y_1]
+model_name = "supportvectorregression"
 
 x_n, y_n = 0, 0
 for x_feature_set in x_feature_sets:
@@ -103,6 +102,11 @@ for x_feature_set in x_feature_sets:
             feature_conditions=y_feature_set
         )
 
+        # check correlation of features
+        covariance_analysis.calculate_plot_covariance(predictor_data, title="cov of predictor")
+        covariance_analysis.calculate_plot_covariance(target_data, title="cov of target")
+
+        exit(0)
         x_vectors = predictor_data.to_numpy()
         y_vectors = target_data.to_numpy()
         x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)
@@ -122,10 +126,10 @@ for x_feature_set in x_feature_sets:
         x_train, x_test = process_data.separate_sets(x_scaled)
         y_train, y_test = process_data.separate_sets(y_vectors)
 
-        linear_regression_model = process_data.train_lr_model(x_train=x_train, y_train=y_train)
-        error = process_data.test_lr_model(linear_regression_model, x_test=x_test, y_test=y_test)
+        regression_model = process_data.train_lr_model(x_train=x_train, y_train=y_train, model_name=model_name)
+        error = process_data.test_lr_model(regression_model, x_test=x_test, y_test=y_test)
 
-        process_data.plot_lr_results(linear_regression_model, x_test, y_test, y_feature_set)
+        process_data.plot_lr_results(regression_model, x_test, y_test, y_feature_set)
 
         print(f"calculate error: {error}")
         print("\n\n")

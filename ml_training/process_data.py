@@ -4,10 +4,20 @@ import random
 from sklearn import linear_model
 from sklearn import metrics
 from sklearn import svm
+from sklearn.multioutput import MultiOutputRegressor
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
 import numpy as np
 import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
+
+
+class SVRWrapper(svm.SVR):
+    def fit(self, X, y, sample_weight=None):
+        if sample_weight is not None:
+            return super().fit(X, y.ravel(), sample_weight=sample_weight)
+        return super().fit(X, y.ravel())
 
 
 def extract_features(data, feature_conditions):
@@ -82,7 +92,6 @@ def get_selected_features(data_path, features_arr, write_file=False, write_path=
         data = df.to_numpy()
 
         if write_file and write_path:
-
             np.save(write_path + "/selected_data.npy", data)
 
     return data
@@ -108,24 +117,26 @@ def train_lr_model(x_train, y_train, model_name=None, pca=False):
     elif model_name.lower() == "linearregression":
         model = linear_model.LinearRegression()
     elif model_name.lower() == "supportvectorregression":
-        model = svm.SVR(kernel='poly')
+        model = MultiOutputRegressor(
+            make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=1.0, epsilon=0.1))
+        )
     else:
-        model = linear_model.LinearRegression()
+        model = MultiOutputRegressor(linear_model.LinearRegression())
         print("Warning: model name default not found")
-
 
     if model is None:
         raise RuntimeError("Error creating model")
+
     model.fit(x_train, y_train)
     return model
 
 
 def test_lr_model(model, x_test, y_test):
     y_predictions = model.predict(x_test)
-    # mse_error = metrics.mean_squared_error(y_test, y_predictions)
+    mse_error = metrics.mean_squared_error(y_test, y_predictions)
     rmse_error = metrics.root_mean_squared_error(y_test, y_predictions)
 
-    return round(rmse_error, 3)
+    return round(mse_error, 3), round(rmse_error, 3)
 
 
 def aggregate_target(y_matrix):
@@ -142,7 +153,6 @@ def plot_lr_results(model, x_test, y_test, target_names=None):
       y_test: The true target values (as a 2D numpy array).
       target_names: Optional list of target names. If None, generic names will be used.
     """
-    import matplotlib.pyplot as plt
 
     # Get predictions
     y_pred = model.predict(x_test)

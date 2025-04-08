@@ -2,9 +2,19 @@
     "AADT": "float64",
     "CONYR": "float64",
     "RESYR": "float64",
-    "CRACK_INDX": "float64",
-    "FAULT_INDX": "float64",
+    "PCI_2": "float64",
+    "RUT_INDX": "float64",
     "IRI_INDX": "float64",
-    "STRUC80": "float64",
-    "TRUCKS": "float64"
+    "FAULT_INDX": "float64",
+    "CRACK_INDX": "float64",
+    "IRI": "float64",
+    "FRICT": "float64",
+    "FAULTAV": "float64",
+    "RUT": "float64",
+    "CRACK_RATIO": "float64",
+    "T_INDX": "float64",
+    "L_INDX": "float64",
+    "LW_INDX": "float64",
+    "LLW_INDX": "float64",
+    "A_INDX": "float64"
 }

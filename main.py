@@ -16,14 +16,47 @@ if not os.path.isdir(parsed_data_dir):
 if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
-
-columns_data = [
-    "AADT", "CONYR", "RESYR", "CRACK_INDX", "FAULT_INDX", "IRI_INDX", "STRUC80", "TRUCKS"
+x_1 = [
+    "AADT",
+    "CONYR",
+    "RESYR",
+    "years_since_repair"
 ]
 
+y_1 = [
+    "PCI_2",
+    "RUT_INDX",
+    "IRI_INDX",
+    "FAULT_INDX",
+    "CRACK_INDX",
+    "IRI",
+    "FRICT",
+    "FAULTAV",
+    "RUT",
+    "CRACK_RATIO",
+    "T_INDX",
+    "L_INDX",
+    "LW_INDX",
+    "LLW_INDX",
+    "A_INDX"
+]
+
+x_feature_sets = [x_1]
+y_feature_sets = [y_1]
+
+headers_arr = []
+for f_set in x_feature_sets:
+    for header in f_set:
+        headers_arr.append(header)
+
+for f_set in y_feature_sets:
+    for header in f_set:
+        headers_arr.append(header)
+
+
 data, features_json = get_data.parse_csv(dataloc,
+                                         features_arr=headers_arr,
                                          save_headers=True,
-                                         features_arr=columns_data
                                          )
 
 data = process_data.remove_empty_cells(data, dtypes=features_json)
@@ -54,34 +87,8 @@ for i, (header, missing, zero) in enumerate(missing_headers, start=1):
     print(header_format.format(i, header, total, missing, zero))
 
 
-x_1 = [
-    "AADT",
-    "CONYR",
-    "RESYR",
-    "years_since_repair"
-]
-
-x_2 = [
-    "AADT",
-    "CONYR",
-    "RESYR",
-    "years_since_repair",
-    "TRUCKS"
-]
-
-y_1 = [
-    "CRACK_INDX",
-    "FAULT_INDX",  # lots missing
-    "IRI_INDX",
-    "STRUC80"
-]
-
-
-x_feature_sets = [x_1, x_2]
-y_feature_sets = [y_1]
 # model_names = ["linear_regression", "supportvectorregression"]
 model_names = ["supportvectorregression"]
-
 x_n, y_n = 0, 0
 for model_name in model_names:
     for x_feature_set in x_feature_sets:
@@ -104,8 +111,9 @@ for model_name in model_names:
             )
 
             # check correlation of features
-            # covariance_analysis.calculate_plot_covariance(predictor_data, title="cov of predictor")
-            # covariance_analysis.calculate_plot_covariance(target_data, title="cov of target")
+            covariance_analysis.calculate_plot_covariance(predictor_data, title="cov of predictor")
+            covariance_analysis.calculate_plot_covariance(target_data, title="cov of target")
+            exit(0)
 
             x_vectors = predictor_data.to_numpy()
             y_vectors = target_data.to_numpy()

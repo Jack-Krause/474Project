@@ -6,7 +6,7 @@ import json
 import random
 
 
-def parse_csv(path, save_headers=False, features_arr=None):
+def parse_csv(path, save_headers=False, features_arr=None, composite_sum=False):
     print("path of csv file: " + path)
 
     root_dir = os.environ.get("ROOT_DIR")
@@ -18,8 +18,16 @@ def parse_csv(path, save_headers=False, features_arr=None):
         headers_obj = json.load(headers_json_file)
 
         if features_arr:
-            selected_dtypes = {col: headers_obj[col] for col in features_arr if col in headers_obj}
-            data = pd.read_csv(path, dtype=selected_dtypes, usecols=features_arr)
+            selected_dtypes = {}
+            valid_cols = []
+
+            for col in features_arr:
+                if col in headers_obj:
+                    selected_dtypes[col] = headers_obj[col]
+                    valid_cols.append(col)
+
+            data = pd.read_csv(path, dtype=selected_dtypes, usecols=valid_cols)
+
         else:
             data = pd.read_csv(path, dtype=headers_obj)
 

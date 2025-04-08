@@ -12,7 +12,7 @@ def calculate_plot_covariance(data, title=None):
     # covariance_matrix = data.cov()
     correlation_matrix = data.corr()
 
-    plt.figure(figsize=(8, 6))
+    plt.figure(figsize=(12, 9))
     sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
     plt_title = "Correlation matrix of features"
     if title:

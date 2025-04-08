@@ -111,8 +111,8 @@ for model_name in model_names:
             )
 
             # check correlation of features
-            covariance_analysis.calculate_plot_covariance(predictor_data, title="cov of predictor")
-            covariance_analysis.calculate_plot_covariance(target_data, title="cov of target")
+            covariance_analysis.calculate_plot_covariance(predictor_data, title="correlation of predictor")
+            covariance_analysis.calculate_plot_covariance(target_data, title="correlation of target")
             exit(0)
 
             x_vectors = predictor_data.to_numpy()

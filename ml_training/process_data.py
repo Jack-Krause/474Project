@@ -118,7 +118,7 @@ def train_lr_model(x_train, y_train, model_name=None, pca=False):
         model = linear_model.LinearRegression()
     elif model_name.lower() == "supportvectorregression":
         model = MultiOutputRegressor(
-            make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=1.0, epsilon=0.1))
+            make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
         )
     else:
         model = MultiOutputRegressor(linear_model.LinearRegression())

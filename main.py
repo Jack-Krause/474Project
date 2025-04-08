@@ -79,7 +79,8 @@ y_1 = [
 
 x_feature_sets = [x_1, x_2]
 y_feature_sets = [y_1]
-model_names = ["linear_regression", "supportvectorregression"]
+# model_names = ["linear_regression", "supportvectorregression"]
+model_names = ["supportvectorregression"]
 
 x_n, y_n = 0, 0
 for model_name in model_names:

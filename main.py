@@ -20,6 +20,7 @@ x_1 = [
     "AADT",
     "CONYR",
     "RESYR",
+    "TRUCKS",
     "years_since_repair"
 ]
 
@@ -57,12 +58,13 @@ for f_set in y_feature_sets:
 data, features_json = get_data.parse_csv(dataloc,
                                          features_arr=headers_arr,
                                          save_headers=True,
+                                         composite_sum=True
                                          )
 
-data = process_data.remove_empty_cells(data, dtypes=features_json)
+# data = process_data.remove_empty_cells(data, dtypes=features_json)
 data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
 data.to_csv(os.path.join(parsed_data_dir, "current_data.csv"), index=False)
-
+print(data)
 missing_headers = []
 for header in data.columns:
     zero_count = 0
@@ -111,9 +113,8 @@ for model_name in model_names:
             )
 
             # check correlation of features
-            covariance_analysis.calculate_plot_covariance(predictor_data, title="correlation of predictor")
-            covariance_analysis.calculate_plot_covariance(target_data, title="correlation of target")
-            exit(0)
+            # covariance_analysis.calculate_plot_covariance(predictor_data, title="correlation of predictor")
+            # covariance_analysis.calculate_plot_covariance(target_data, title="correlation of target")
 
             x_vectors = predictor_data.to_numpy()
             y_vectors = target_data.to_numpy()

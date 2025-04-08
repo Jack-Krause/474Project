@@ -27,6 +27,12 @@ def parse_csv(path, save_headers=False, features_arr=None, composite_sum=False):
                     valid_cols.append(col)
 
             data = pd.read_csv(path, dtype=selected_dtypes, usecols=valid_cols)
+            if composite_sum:
+                data['composite_target'] = 0.0
+            for header in valid_cols:
+                data[header] = pd.to_numeric(data[header], errors='coerce').fillna(0)
+                data['composite_target'] += data[header]
+            return data, headers_obj
 
         else:
             data = pd.read_csv(path, dtype=headers_obj)

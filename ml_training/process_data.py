@@ -117,9 +117,10 @@ def train_lr_model(x_train, y_train, model_name=None, pca=False):
     elif model_name.lower() == "linearregression":
         model = linear_model.LinearRegression()
     elif model_name.lower() == "supportvectorregression":
-        model = MultiOutputRegressor(
-            make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
-        )
+        # model = MultiOutputRegressor(
+        #     make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
+        # )
+        model = make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
     else:
         model = MultiOutputRegressor(linear_model.LinearRegression())
         print("Warning: model name default not found")
@@ -168,18 +169,18 @@ def plot_lr_results(model, x_test, y_test, target_names=None):
         target_names = [f"Target {i + 1}" for i in range(n_targets)]
 
     # Create a scatter plot for each target variable
-    # for i in range(n_targets):
-    #     plt.figure(figsize=(8, 6))
-    #     plt.scatter(y_test[:, i], y_pred[:, i], alpha=0.6, label="Predictions")
-    #     # Plot a reference line: perfect prediction line
-    #     min_val = min(y_test[:, i].min(), y_pred[:, i].min())
-    #     max_val = max(y_test[:, i].max(), y_pred[:, i].max())
-    #     plt.plot([min_val, max_val], [min_val, max_val], 'r--', label="Ideal")
-    #     plt.xlabel("Actual " + target_names[i])
-    #     plt.ylabel("Predicted " + target_names[i])
-    #     plt.title("Actual vs. Predicted " + target_names[i])
-    #     plt.legend()
-    #     plt.show()
+    for i in range(n_targets):
+        plt.figure(figsize=(8, 6))
+        plt.scatter(y_test[:, i], y_pred[:, i], alpha=0.6, label="Predictions")
+        # Plot a reference line: perfect prediction line
+        min_val = min(y_test[:, i].min(), y_pred[:, i].min())
+        max_val = max(y_test[:, i].max(), y_pred[:, i].max())
+        plt.plot([min_val, max_val], [min_val, max_val], 'r--', label="Ideal")
+        plt.xlabel("Actual " + target_names[i])
+        plt.ylabel("Predicted " + target_names[i])
+        plt.title("Actual vs. Predicted " + target_names[i])
+        plt.legend()
+        plt.show()
 
 
 

@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import matplotlib.pyplot as plt
 import get_data.retrieve_data as get_data
 from analysis import covariance_analysis
 from ml_training import process_data
@@ -120,12 +121,19 @@ for model_name in model_names:
         target_pca_subset = target_data[pca_headers]
         target_pca_scaled = preprocessing.StandardScaler().fit_transform(target_pca_subset)
 
-        pca = PCA(n_components=1)
+        pca = PCA(n_components=2)
         y_pca = pca.fit_transform(target_pca_scaled)
         print(f"target (y) explained variance: {pca.explained_variance_}")
         print(f"target (y) explained variance ratio: {pca.explained_variance_ratio_}")
 
-
+        # Plot the 2D projection
+        plt.figure(figsize=(8, 6))
+        plt.scatter(y_pca[:, 0], y_pca[:, 1], alpha=0.7)
+        plt.xlabel("Principal Component 1")
+        plt.ylabel("Principal Component 2")
+        plt.title("2D PCA Projection of Target Data")
+        plt.grid(True)
+        plt.show()
 
 
         for x_feature_set in x_feature_sets:

@@ -29,15 +29,17 @@ def parse_csv(path, save_headers=False, features_arr=None, composite_sum=False):
             data = pd.read_csv(path, dtype=selected_dtypes, usecols=valid_cols)
             if composite_sum:
                 data['composite_target'] = 0.0
-            for header in valid_cols:
-                data[header] = pd.to_numeric(data[header], errors='coerce').fillna(0)
-                data['composite_target'] += data[header]
+                for header in valid_cols:
+                    col_data = pd.to_numeric(data[header], errors='coerce').fillna(0)
+                    data['composite_target'] += col_data
+
+                if 'composite_target' not in data.columns:
+                    data['composite_target'] = 0.0
+                for header in valid_cols:
+                    col_data = pd.to_numeric(data[header], errors='coerce').fillna(0)
+                    data['composite_target'] = data['composite_target'] + col_data
+
             return data, headers_obj
-
-        else:
-            data = pd.read_csv(path, dtype=headers_obj)
-
-        return data, headers_obj
 
 
 def save_headers_json(path, save_path, features_arr=None):

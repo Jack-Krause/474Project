@@ -117,10 +117,10 @@ def train_lr_model(x_train, y_train, model_name=None, pca=False):
     elif model_name.lower() == "linearregression":
         model = linear_model.LinearRegression()
     elif model_name.lower() == "supportvectorregression":
-        # model = MultiOutputRegressor(
-        #     make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
-        # )
-        model = make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
+        model = MultiOutputRegressor(
+            make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
+        )
+        # model = make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
     else:
         model = MultiOutputRegressor(linear_model.LinearRegression())
         print("Warning: model name default not found")
@@ -146,15 +146,13 @@ def aggregate_target(y_matrix):
 
 def plot_lr_results(model, x_test, y_test, target_names=None):
     """
-    Plots actual vs. predicted values for each target variable.
-
-    Parameters:
-      model: The trained linear regression model.
-      x_test: The test set predictors.
-      y_test: The true target values (as a 2D numpy array).
-      target_names: Optional list of target names. If None, generic names will be used.
+    Improved plot for actual vs. predicted values.
+    It shows:
+      - A scatter plot of predictions vs. actual values.
+      - An ideal (perfect prediction) line (y = x).
+      - A best-fit regression line to summarize the trend.
+      - The R² score as a performance metric.
     """
-
     # Get predictions
     y_pred = model.predict(x_test)
 
@@ -168,14 +166,30 @@ def plot_lr_results(model, x_test, y_test, target_names=None):
     if target_names is None:
         target_names = [f"Target {i + 1}" for i in range(n_targets)]
 
-    # Create a scatter plot for each target variable
     for i in range(n_targets):
         plt.figure(figsize=(8, 6))
-        plt.scatter(y_test[:, i], y_pred[:, i], alpha=0.6, label="Predictions")
-        # Plot a reference line: perfect prediction line
+        # Scatter plot of actual vs. predicted values
+        plt.scatter(y_test[:, i], y_pred[:, i], alpha=0.6, label="Data points")
+
+        # Determine limits for the plot based on the data range
         min_val = min(y_test[:, i].min(), y_pred[:, i].min())
         max_val = max(y_test[:, i].max(), y_pred[:, i].max())
-        plt.plot([min_val, max_val], [min_val, max_val], 'r--', label="Ideal")
+
+        # Plot ideal (perfect prediction) line (y = x)
+        plt.plot([min_val, max_val], [min_val, max_val], 'r--', lw=2, label="Perfect Prediction")
+
+        # Compute and plot a best-fit regression line
+        coeffs = np.polyfit(y_test[:, i], y_pred[:, i], 1)
+        best_fit = np.poly1d(coeffs)
+        line_x = np.linspace(min_val, max_val, 100)
+        plt.plot(line_x, best_fit(line_x), 'g-', lw=2, label="Best Fit")
+
+        # Optionally, compute the R² score for additional clarity
+        from sklearn.metrics import r2_score
+        r2 = r2_score(y_test[:, i], y_pred[:, i])
+        plt.text(0.05, 0.95, f"$R^2={r2:.2f}$", transform=plt.gca().transAxes,
+                 fontsize=12, verticalalignment='top', bbox=dict(facecolor='white', alpha=0.8, edgecolor='none'))
+
         plt.xlabel("Actual " + target_names[i])
         plt.ylabel("Predicted " + target_names[i])
         plt.title("Actual vs. Predicted " + target_names[i])
@@ -183,9 +197,27 @@ def plot_lr_results(model, x_test, y_test, target_names=None):
         plt.show()
 
 
+def plot_residuals(model, x_test, y_test, target_names=None):
+    """
+    Plots residuals (Actual - Predicted) vs. Actual values for each target variable.
+    """
+    y_pred = model.predict(x_test)
+    if y_test.ndim == 1:
+        y_test = y_test.reshape(-1, 1)
+    if y_pred.ndim == 1:
+        y_pred = y_pred.reshape(-1, 1)
 
+    residuals = y_test - y_pred
+    n_targets = y_test.shape[1]
+    if target_names is None:
+        target_names = [f"Target {i + 1}" for i in range(n_targets)]
 
-
-
-
+    for i in range(n_targets):
+        plt.figure(figsize=(8, 6))
+        plt.scatter(y_test[:, i], residuals[:, i], alpha=0.6)
+        plt.axhline(0, color='red', ls='--', lw=2)
+        plt.xlabel("Actual " + target_names[i])
+        plt.ylabel("Residuals (Actual - Predicted)")
+        plt.title("Residual Plot for " + target_names[i])
+        plt.show()
 

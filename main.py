@@ -136,6 +136,7 @@ for model_name in model_names:
             mse, rmse = process_data.test_lr_model(regression_model, x_test, y_test)
             process_data.plot_lr_results(regression_model, x_test, y_test, target_names=["PC1", "PC2"])
             process_data.plot_residuals(regression_model, x_test, y_test, target_names=["PC1", "PC2"])
+            process_data.plot_learning_curve(regression_model, x_scaled, y_vectors)
             print(f"Model: {model_name}, MSE: {mse}, RMSE: {rmse}\n")
 
 

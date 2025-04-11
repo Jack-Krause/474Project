@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
+from sklearn.model_selection import learning_curve
 
 
 class SVRWrapper(svm.SVR):
@@ -221,3 +222,20 @@ def plot_residuals(model, x_test, y_test, target_names=None):
         plt.title("Residual Plot for " + target_names[i])
         plt.show()
 
+
+
+def plot_learning_curve(model, X, y, cv=5, train_sizes=np.linspace(0.1, 1.0, 5)):
+    train_sizes, train_scores, validation_scores = learning_curve(
+        model, X, y, cv=cv, train_sizes=train_sizes, scoring='neg_mean_squared_error'
+    )
+    train_scores_mean = -np.mean(train_scores, axis=1)
+    validation_scores_mean = -np.mean(validation_scores, axis=1)
+
+    plt.figure(figsize=(8, 6))
+    plt.plot(train_sizes, train_scores_mean, 'o-', color="r", label="Training error")
+    plt.plot(train_sizes, validation_scores_mean, 'o-', color="g", label="Validation error")
+    plt.xlabel("Training Set Size")
+    plt.ylabel("MSE")
+    plt.title("Learning Curve")
+    plt.legend(loc="best")
+    plt.show()

@@ -12,6 +12,8 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
+from sklearn.neural_network import MLPRegressor
+from sklearn.model_selection import GridSearchCV
 
 
 class SVRWrapper(svm.SVR):
@@ -122,6 +124,36 @@ def train_lr_model(x_train, y_train, model_name=None, pca=False):
             make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
         )
         # model = make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
+    elif model_name.lower() == "mlpregressor":
+        # model_MLP = MLPRegressor(max_iter=1000, random_state=42)
+
+        # param_grid = {
+        #     'hidden_layer_sizes': [(50,), (100,), (50, 50)],
+        #     # 'hidden_layer_sizes': [(25,), (50,), (25, 25)],
+        #     'activation': ['relu', 'tanh'],
+        #     'alpha': [0.0001, 0.001, 0.01],  # L2 regularization strength
+        #     'learning_rate_init': [0.001, 0.01]
+        # }
+        #
+        # model = GridSearchCV(model_MLP, param_grid, cv=5, scoring='neg_mean_squared_error', n_jobs=-1)
+        model = MLPRegressor(
+                             max_iter=2000,
+                             random_state=42,
+                             hidden_layer_sizes=(50,50),
+                             activation='tanh',
+                             alpha=0.0001,
+                             learning_rate_init=0.001
+                             )
+        model.fit(x_train, y_train)
+        plt.figure(figsize=(8, 6))
+        plt.plot(model.loss_curve_, marker='o')
+        plt.title("MLPRegressor Training Loss Curve")
+        plt.xlabel("Iteration")
+        plt.ylabel("Loss")
+        plt.grid(True)
+        plt.show()
+        return model
+
     else:
         model = MultiOutputRegressor(linear_model.LinearRegression())
         print("Warning: model name default not found")

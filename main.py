@@ -19,7 +19,7 @@ if not os.path.isdir(parsed_data_dir):
 if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
-x_1 = [
+x_features = [
     "AADT",
     "CONYR",
     "RESYR",
@@ -27,49 +27,25 @@ x_1 = [
     "years_since_repair"
 ]
 
-y_1 = [
-    "PCI_2",
-    "RUT_INDX",
-    "IRI_INDX",
-    "FAULT_INDX",
-    "CRACK_INDX",
-    "IRI",
-    "FRICT",
-    "FAULTAV",
-    "RUT",
-    "CRACK_RATIO",
-    "T_INDX",
-    "L_INDX",
-    "LW_INDX",
-    "LLW_INDX",
-    "A_INDX"
-]
 
-x_feature_sets = [x_1]
-y_feature_sets = [y_1]
+y_features = ["IRI", "CRACK_INDX", "PCI_2"]
 
 headers_arr = []
-for f_set in x_feature_sets:
-    for header in f_set:
-        headers_arr.append(header)
 
-for f_set in y_feature_sets:
-    for header in f_set:
-        headers_arr.append(header)
+for header in y_features:
+    headers_arr.append(header)
 
+for header in x_features:
+    headers_arr.append(header)
 
 data, features_json = get_data.parse_csv(dataloc,
                                          features_arr=headers_arr,
                                          save_headers=True,
                                          )
-
-# target_data = process_data.extract_features(data, feature_conditions=y_1)
-# data['composite_target'] = target_data.sum(axis=1)
-
 data = process_data.remove_empty_cells(data, dtypes=features_json)
 data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
 data.to_csv(os.path.join(parsed_data_dir, "current_data.csv"), index=False)
-# print(data)
+# data['composite_target'] = target_data.sum(axis=1)
 
 missing_headers = []
 for header in data.columns:
@@ -94,59 +70,42 @@ for i, (header, missing, zero) in enumerate(missing_headers, start=1):
     total = missing + zero
     print(header_format.format(i, header, total, missing, zero))
 
-model_names = ["mlpregressor", "linearregression", "supportvectorregression"]
-x_n = 0
-for model_name in model_names:
-    for y_feature_set in y_feature_sets:
-        x_n += 1
-        # Extract full target data from y_1
-        target_data = process_data.extract_features(data, feature_conditions=y_1)
-        # Use a subset of target columns for PCA
-        pca_headers = ["A_INDX", "IRI_INDX", "FAULT_INDX", "LLW_INDX", "CRACK_INDX",
-                       "PCI_2", "LW_INDX", "L_INDX", "RUT_INDX"]
-        target_pca_subset = target_data[pca_headers]
-        target_pca_scaled = preprocessing.StandardScaler().fit_transform(target_pca_subset)
-        pca = PCA(n_components=2)
-        y_pca = pca.fit_transform(target_pca_scaled)
-        # print(f"Target PCA explained variance ratio: {pca.explained_variance_ratio_}")
+model_name = "mlpregressor"
+# Extract full target data from y_1
+target_data = process_data.extract_features(data, feature_conditions=y_features)
+# Use a subset of target columns for PCA
+pca_headers = ["IRI", "CRACK_INDX", "PCI_2"]
+target_pca_subset = target_data[pca_headers]
+target_pca_scaled = preprocessing.StandardScaler().fit_transform(target_pca_subset)
+pca = PCA(n_components=2)
+y_pca = pca.fit_transform(target_pca_scaled)
 
-        # Plot raw 2D PCA projection
-        plt.figure(figsize=(8, 6))
-        plt.scatter(y_pca[:, 0], y_pca[:, 1], alpha=0.7)
-        plt.xlabel("Principal Component 1")
-        plt.ylabel("Principal Component 2")
-        plt.title("2D PCA Projection of Target Data")
-        plt.grid(True)
-        plt.show()
+print(f"Target PCA explained variance ratio: {pca.explained_variance_ratio_}")
+predictor_data = process_data.extract_features(data, feature_conditions=x_features)
+x_vectors = predictor_data.to_numpy()
+x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)
+y_vectors = y_pca
 
-        for x_feature_set in x_feature_sets:
-            print(f"\n\nModel: (x features: model: {model_name})")
-            predictor_data = process_data.extract_features(data, feature_conditions=x_feature_set)
-            x_vectors = predictor_data.to_numpy()
-            x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)
-            y_vectors = y_pca
+# Plot raw 2D PCA projection
+plt.figure(figsize=(8, 6))
+plt.scatter(y_pca[:, 0], y_pca[:, 1], alpha=0.7)
+plt.xlabel("Principal Component 1")
+plt.ylabel("Principal Component 2")
+plt.title("2D PCA Projection of Target Data")
+plt.grid(True)
+plt.show()
 
-            # print(f"Predictor data:\n{predictor_data}\n")
-            # print(f"Target data (PCA):\n{y_pca}\n")
+print(f"\n\nModel: (x features: model: {model_name})")
 
-            x_train, x_test, y_train, y_test = train_test_split(
-                x_scaled, y_vectors, test_size=.20
-            )
+x_train, x_test, y_train, y_test = train_test_split(
+    x_scaled, y_vectors, test_size=.20
+)
 
+exit(0)
+regression_model = process_data.train_lr_model(x_train, y_train, model_name=model_name)
+mse, rmse = process_data.test_lr_model(regression_model, x_test, y_test)
+process_data.plot_lr_results(regression_model, x_test, y_test, target_names=["PC1", "PC2"])
+process_data.plot_residuals(regression_model, x_test, y_test, target_names=["PC1", "PC2"])
+process_data.plot_learning_curve(regression_model, x_scaled, y_vectors)
 
-            regression_model = process_data.train_lr_model(x_train, y_train, model_name=model_name)
-            mse, rmse = process_data.test_lr_model(regression_model, x_test, y_test)
-            process_data.plot_lr_results(regression_model, x_test, y_test, target_names=["PC1", "PC2"])
-            process_data.plot_residuals(regression_model, x_test, y_test, target_names=["PC1", "PC2"])
-            process_data.plot_learning_curve(regression_model, x_scaled, y_vectors)
-
-            print(f"Model: {model_name}, MSE: {mse}, RMSE: {rmse}\n")
-            # if model_name == "mlpregressor":
-            #     print("Best parameters found: ", regression_model.best_params_)
-            #     print("Best cross-validation MSE: ", -regression_model.best_score_)
-
-
-
-
-
-
+print(f"Model: {model_name}, MSE: {mse}, RMSE: {rmse}\n")

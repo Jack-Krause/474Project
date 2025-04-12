@@ -271,3 +271,11 @@ def plot_learning_curve(model, X, y, cv=5, train_sizes=np.linspace(0.1, 1.0, 5))
     plt.title("Learning Curve")
     plt.legend(loc="best")
     plt.show()
+
+
+
+
+
+
+
+

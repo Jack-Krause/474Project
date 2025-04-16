@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas
 
+from mpl_toolkits.mplot3d import Axes3D
+
 import get_data.retrieve_data as get_data
 from analysis import covariance_analysis
 from ml_training import process_data
@@ -72,8 +74,8 @@ for i, (header, missing, zero) in enumerate(missing_headers, start=1):
     total = missing + zero
     print(header_format.format(i, header, total, missing, zero))
 
-# model_name = "mlpregressor"
-model_name = "linearregression"
+model_name = "mlpregressor"
+# model_name = "linearregression"
 # Extract full target data from y_1
 target_data = process_data.extract_features(data, feature_conditions=y_features)
 # Use a subset of target columns for PCA
@@ -89,22 +91,17 @@ x_vectors = predictor_data.to_numpy()
 x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)
 y_vectors = y_pca
 
-# Plot raw 2D PCA projection
-# plt.figure(figsize=(8, 6))
-# plt.scatter(y_pca[:, 0], y_pca[:, 1], alpha=0.7)
-# plt.xlabel("Principal Component 1")
-# plt.ylabel("Principal Component 2")
-# plt.title("2D PCA Projection of Target Data")
-# plt.grid(True)
-# plt.show()
-fig = plt.figure()
-ax = fig.add_subplot(projection='3d')
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, projection='3d')
 
-plt.figure(figsize=(8, 6))
-plt.scatter(y_pca[:, 0], y_pca[:, 1], y_pca[:, 2], c='r', marker='o')
-plt.xlabel("Principal Component 1")
-plt.title("2D PCA Projection of Target Data")
-plt.grid(True)
+# Use the 3D axes to plot, not plt.scatter
+ax.scatter(y_pca[:, 0], y_pca[:, 1], y_pca[:, 2], c='r', marker='o')
+ax.set_xlabel("Principal Component 1")
+ax.set_ylabel("Principal Component 2")
+ax.set_zlabel("Principal Component 3")
+ax.set_title("3D PCA Projection of Target Data")
+ax.grid(True)
+
 plt.show()
 
 

@@ -136,15 +136,25 @@ def train_lr_model(x_train, y_train, model_name=None, pca=False):
         # }
         #
         # model = GridSearchCV(model_MLP, param_grid, cv=5, scoring='neg_mean_squared_error', n_jobs=-1)
+        # model = MLPRegressor(
+        #                      max_iter=2000,
+        #                      random_state=42,
+        #                      hidden_layer_sizes=(50,50),
+        #                      activation='tanh',
+        #                      alpha=0.0001,
+        #                      learning_rate_init=0.001
+        #                      )
         model = MLPRegressor(
-                             max_iter=2000,
-                             random_state=42,
-                             hidden_layer_sizes=(50,50),
-                             activation='tanh',
-                             alpha=0.0001,
-                             learning_rate_init=0.001
-                             )
+            max_iter=2000,
+            random_state=42,
+            hidden_layer_sizes=(20, 20),
+            early_stopping=True,
+            activation='relu',
+            alpha=0.0001,
+            learning_rate_init=0.001
+        )
         model.fit(x_train, y_train)
+
         plt.figure(figsize=(8, 6))
         plt.plot(model.loss_curve_, marker='o')
         plt.title("MLPRegressor Training Loss Curve")
@@ -152,6 +162,7 @@ def train_lr_model(x_train, y_train, model_name=None, pca=False):
         plt.ylabel("Loss")
         plt.grid(True)
         plt.show()
+        print(f" NN params:\n{model.get_params(deep=True)}")
         return model
 
     else:
@@ -179,60 +190,56 @@ def aggregate_target(y_matrix):
 
 def plot_lr_results(model, x_test, y_test, target_names=None):
     """
-    Improved plot for actual vs. predicted values.
-    It shows:
-      - A scatter plot of predictions vs. actual values.
-      - An ideal (perfect prediction) line (y = x).
-      - A best-fit regression line to summarize the trend.
-      - The R² score as a performance metric.
+    Plot actual vs. predicted values for each target variable.
+    Shows:
+      - Scatter plot of predictions vs. actual values.
+      - Ideal line (y = x) and best-fit regression line.
+      - Displays the R² score.
     """
-    # Get predictions
     y_pred = model.predict(x_test)
 
-    # Ensure y_test and y_pred are 2D arrays
+    # Ensure 2D arrays for consistency
     if y_test.ndim == 1:
         y_test = y_test.reshape(-1, 1)
     if y_pred.ndim == 1:
         y_pred = y_pred.reshape(-1, 1)
 
     n_targets = y_test.shape[1]
-    if target_names is None:
+    if target_names is None or len(target_names) != n_targets:
         target_names = [f"Target {i + 1}" for i in range(n_targets)]
 
     for i in range(n_targets):
-        plt.figure(figsize=(8, 6))
-        # Scatter plot of actual vs. predicted values
-        plt.scatter(y_test[:, i], y_pred[:, i], alpha=0.6, label="Data points")
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.scatter(y_test[:, i], y_pred[:, i], alpha=0.6, label="Data points")
 
-        # Determine limits for the plot based on the data range
+        # Determine limits for the plot
         min_val = min(y_test[:, i].min(), y_pred[:, i].min())
         max_val = max(y_test[:, i].max(), y_pred[:, i].max())
+        ax.plot([min_val, max_val], [min_val, max_val], 'r--', lw=2, label="Perfect Prediction")
 
-        # Plot ideal (perfect prediction) line (y = x)
-        plt.plot([min_val, max_val], [min_val, max_val], 'r--', lw=2, label="Perfect Prediction")
-
-        # Compute and plot a best-fit regression line
+        # Best-fit line
         coeffs = np.polyfit(y_test[:, i], y_pred[:, i], 1)
         best_fit = np.poly1d(coeffs)
         line_x = np.linspace(min_val, max_val, 100)
-        plt.plot(line_x, best_fit(line_x), 'g-', lw=2, label="Best Fit")
+        ax.plot(line_x, best_fit(line_x), 'g-', lw=2, label="Best Fit")
 
-        # Optionally, compute the R² score for additional clarity
+        # Calculate and display the R² score
         from sklearn.metrics import r2_score
         r2 = r2_score(y_test[:, i], y_pred[:, i])
-        plt.text(0.05, 0.95, f"$R^2={r2:.2f}$", transform=plt.gca().transAxes,
-                 fontsize=12, verticalalignment='top', bbox=dict(facecolor='white', alpha=0.8, edgecolor='none'))
+        ax.text(0.05, 0.95, f"$R^2={r2:.2f}$", transform=ax.transAxes,
+                fontsize=12, verticalalignment='top',
+                bbox=dict(facecolor='white', alpha=0.8, edgecolor='none'))
 
-        plt.xlabel("Actual " + target_names[0])
-        plt.ylabel("Predicted " + target_names[1])
-        plt.title("Actual vs. Predicted " + target_names[0] + target_names[1])
-        plt.legend()
+        ax.set_xlabel(f"Actual {target_names[i]}")
+        ax.set_ylabel(f"Predicted {target_names[i]}")
+        ax.set_title(f"Actual vs. Predicted for {target_names[i]}")
+        ax.legend()
         plt.show()
 
 
 def plot_residuals(model, x_test, y_test, target_names=None):
     """
-    Plots residuals (Actual - Predicted) vs. Actual values for each target variable.
+    Plot residuals (difference between actual and predicted values) for each target variable.
     """
     y_pred = model.predict(x_test)
     if y_test.ndim == 1:
@@ -242,35 +249,38 @@ def plot_residuals(model, x_test, y_test, target_names=None):
 
     residuals = y_test - y_pred
     n_targets = y_test.shape[1]
-    if target_names is None:
+    if target_names is None or len(target_names) != n_targets:
         target_names = [f"Target {i + 1}" for i in range(n_targets)]
 
     for i in range(n_targets):
-        plt.figure(figsize=(8, 6))
-        plt.scatter(y_test[:, i], residuals[:, i], alpha=0.6)
-        plt.axhline(0, color='red', ls='--', lw=2)
-        plt.xlabel("Actual " + target_names[0])
-        plt.ylabel("Residuals (Actual - Predicted)")
-        plt.title("Residual Plot for " + target_names[0])
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.scatter(y_test[:, i], residuals[:, i], alpha=0.6)
+        ax.axhline(0, color='red', ls='--', lw=2)
+        ax.set_xlabel(f"Actual {target_names[i]}")
+        ax.set_ylabel("Residuals (Actual - Predicted)")
+        ax.set_title(f"Residual Plot for {target_names[i]}")
         plt.show()
 
 
-
 def plot_learning_curve(model, X, y, cv=5, train_sizes=np.linspace(0.1, 1.0, 5)):
+    """
+    Plot the learning curve indicating training and validation MSE.
+    """
     train_sizes, train_scores, validation_scores = learning_curve(
         model, X, y, cv=cv, train_sizes=train_sizes, scoring='neg_mean_squared_error'
     )
     train_scores_mean = -np.mean(train_scores, axis=1)
     validation_scores_mean = -np.mean(validation_scores, axis=1)
 
-    plt.figure(figsize=(8, 6))
-    plt.plot(train_sizes, train_scores_mean, 'o-', color="r", label="Training error")
-    plt.plot(train_sizes, validation_scores_mean, 'o-', color="g", label="Validation error")
-    plt.xlabel("Training Set Size")
-    plt.ylabel("MSE")
-    plt.title("Learning Curve")
-    plt.legend(loc="best")
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.plot(train_sizes, train_scores_mean, 'o-', label="Training Error")
+    ax.plot(train_sizes, validation_scores_mean, 'o-', label="Validation Error")
+    ax.set_xlabel("Training Set Size")
+    ax.set_ylabel("MSE")
+    ax.set_title("Learning Curve")
+    ax.legend(loc="best")
     plt.show()
+
 
 
 

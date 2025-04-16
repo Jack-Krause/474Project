@@ -1,6 +1,8 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas
+
 import get_data.retrieve_data as get_data
 from analysis import covariance_analysis
 from ml_training import process_data
@@ -70,14 +72,15 @@ for i, (header, missing, zero) in enumerate(missing_headers, start=1):
     total = missing + zero
     print(header_format.format(i, header, total, missing, zero))
 
-model_name = "mlpregressor"
+# model_name = "mlpregressor"
+model_name = "linearregression"
 # Extract full target data from y_1
 target_data = process_data.extract_features(data, feature_conditions=y_features)
 # Use a subset of target columns for PCA
 pca_headers = ["IRI", "CRACK_INDX", "PCI_2"]
 target_pca_subset = target_data[pca_headers]
 target_pca_scaled = preprocessing.StandardScaler().fit_transform(target_pca_subset)
-pca = PCA(n_components=2)
+pca = PCA(n_components=3)
 y_pca = pca.fit_transform(target_pca_scaled)
 
 print(f"Target PCA explained variance ratio: {pca.explained_variance_ratio_}")
@@ -87,21 +90,30 @@ x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)
 y_vectors = y_pca
 
 # Plot raw 2D PCA projection
+# plt.figure(figsize=(8, 6))
+# plt.scatter(y_pca[:, 0], y_pca[:, 1], alpha=0.7)
+# plt.xlabel("Principal Component 1")
+# plt.ylabel("Principal Component 2")
+# plt.title("2D PCA Projection of Target Data")
+# plt.grid(True)
+# plt.show()
+fig = plt.figure()
+ax = fig.add_subplot(projection='3d')
+
 plt.figure(figsize=(8, 6))
-plt.scatter(y_pca[:, 0], y_pca[:, 1], alpha=0.7)
+plt.scatter(y_pca[:, 0], y_pca[:, 1], y_pca[:, 2], c='r', marker='o')
 plt.xlabel("Principal Component 1")
-plt.ylabel("Principal Component 2")
 plt.title("2D PCA Projection of Target Data")
 plt.grid(True)
 plt.show()
 
-print(f"\n\nModel: (x features: model: {model_name})")
+
+print(f"\n\nModel: {model_name})")
 
 x_train, x_test, y_train, y_test = train_test_split(
-    x_scaled, y_vectors, test_size=.20
+    x_scaled, y_vectors, test_size=.20, shuffle=True
 )
 
-exit(0)
 regression_model = process_data.train_lr_model(x_train, y_train, model_name=model_name)
 mse, rmse = process_data.test_lr_model(regression_model, x_test, y_test)
 process_data.plot_lr_results(regression_model, x_test, y_test, target_names=["PC1", "PC2"])

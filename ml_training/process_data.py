@@ -223,9 +223,9 @@ def plot_lr_results(model, x_test, y_test, target_names=None):
         plt.text(0.05, 0.95, f"$R^2={r2:.2f}$", transform=plt.gca().transAxes,
                  fontsize=12, verticalalignment='top', bbox=dict(facecolor='white', alpha=0.8, edgecolor='none'))
 
-        plt.xlabel("Actual " + target_names[i])
-        plt.ylabel("Predicted " + target_names[i])
-        plt.title("Actual vs. Predicted " + target_names[i])
+        plt.xlabel("Actual " + target_names[0])
+        plt.ylabel("Predicted " + target_names[1])
+        plt.title("Actual vs. Predicted " + target_names[0] + target_names[1])
         plt.legend()
         plt.show()
 
@@ -249,9 +249,9 @@ def plot_residuals(model, x_test, y_test, target_names=None):
         plt.figure(figsize=(8, 6))
         plt.scatter(y_test[:, i], residuals[:, i], alpha=0.6)
         plt.axhline(0, color='red', ls='--', lw=2)
-        plt.xlabel("Actual " + target_names[i])
+        plt.xlabel("Actual " + target_names[0])
         plt.ylabel("Residuals (Actual - Predicted)")
-        plt.title("Residual Plot for " + target_names[i])
+        plt.title("Residual Plot for " + target_names[0])
         plt.show()
 
 

@@ -122,7 +122,7 @@ process_data.plot_residuals(regression_model, x_test, y_test, target_names=["PC1
 process_data.plot_learning_curve(regression_model, x_scaled, y_vectors)
 print("model params", regression_model.get_params())
 
-model_path = os.path.join(models_save_dir, model_name + str(1))
+model_path = os.path.join(models_save_dir, model_name + str(1) + ".skops")
 dump(regression_model, model_path)
 
 print(f"Model: {model_name}, MSE: {mse}, RMSE: {rmse}\n")

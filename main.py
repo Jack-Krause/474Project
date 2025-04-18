@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas
+from skops.io import dump, load
 
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -16,9 +16,13 @@ import pandas as pd
 root_dir = os.environ.get("ROOT_DIR")
 dataloc = os.path.join(root_dir, "data", "data_new_b.csv")
 parsed_data_dir = os.path.join(root_dir, "parsed_data")
+models_save_dir = os.path.join(root_dir, "PersistentModels")
 
 if not os.path.isdir(parsed_data_dir):
     os.mkdir(parsed_data_dir)
+
+if not os.path.isdir(models_save_dir):
+    os.mkdir(models_save_dir)
 
 if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
@@ -116,5 +120,9 @@ mse, rmse = process_data.test_lr_model(regression_model, x_test, y_test)
 process_data.plot_lr_results(regression_model, x_test, y_test, target_names=["PC1", "PC2"])
 process_data.plot_residuals(regression_model, x_test, y_test, target_names=["PC1", "PC2"])
 process_data.plot_learning_curve(regression_model, x_scaled, y_vectors)
+print("model params", regression_model.get_params())
+
+model_path = os.path.join(models_save_dir, model_name + str(1))
+dump(regression_model, model_path)
 
 print(f"Model: {model_name}, MSE: {mse}, RMSE: {rmse}\n")

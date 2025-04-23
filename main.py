@@ -12,8 +12,32 @@ from sklearn import preprocessing
 from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split
 import pandas as pd
+import dotenv
 
-root_dir = os.environ.get("ROOT_DIR")
+
+def env_variable(key, f=".env", required=True):
+    value = os.environ.get(key)
+    if value is not None:
+        return value
+    
+    if os.path.exists(f):
+        dotenv.load_dotenv(f)
+        value = os.environ.get(key)
+        
+        if value is not None:
+            return value
+        
+    if required:
+        raise RuntimeError(f"ERROR: {key} env variable not found")
+    return None
+            
+
+
+# root_dir = os.environ.get("ROOT_DIR")
+root_dir = env_variable("ROOT_DIR")
+print(f"ROOT DIR IS:\n{root_dir}")
+exit(0)
+
 dataloc = os.path.join(root_dir, "data", "data_new_b.csv")
 parsed_data_dir = os.path.join(root_dir, "parsed_data")
 models_save_dir = os.path.join(root_dir, "PersistentModels")

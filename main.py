@@ -36,7 +36,6 @@ def env_variable(key, f=".env", required=True):
 # root_dir = os.environ.get("ROOT_DIR")
 root_dir = env_variable("ROOT_DIR")
 print(f"ROOT DIR IS:\n{root_dir}")
-exit(0)
 
 dataloc = os.path.join(root_dir, "data", "data_new_b.csv")
 parsed_data_dir = os.path.join(root_dir, "parsed_data")

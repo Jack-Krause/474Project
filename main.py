@@ -37,7 +37,7 @@ def env_variable(key, f=".env", required=True):
 root_dir = env_variable("ROOT_DIR")
 print(f"ROOT DIR IS:\n{root_dir}")
 
-dataloc = os.path.join(root_dir, "data", "data_new_b.csv")
+dataloc = os.path.join(root_dir, "gsom_data", "USW00003184.csv")
 parsed_data_dir = os.path.join(root_dir, "parsed_data")
 models_save_dir = os.path.join(root_dir, "PersistentModels")
 

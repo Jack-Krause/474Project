@@ -1,9 +1,0 @@
-{
-    "IRI": "float64",
-    "CRACK_INDX": "float64",
-    "PCI_2": "float64",
-    "AADT": "float64",
-    "CONYR": "float64",
-    "RESYR": "float64",
-    "TRUCKS": "float64"
-}

@@ -50,31 +50,54 @@ if not os.path.isdir(models_save_dir):
 if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
+# x_features = [
+#     "TAVG",
+#     "TMIN",
+#     "TMIN"
+# ]
+
 x_features = [
-    "AADT",
-    "CONYR",
-    "RESYR",
-    "TRUCKS",
-    "years_since_repair"
+    "TAVG", # 314 non-null
+    "AWND", # 313 non-null
+    "DP01", # 318 non-null
+    "DP10", # 318 non-null
+    "DP1X",  # 318 non-null
+    "EMXP"  # 318
 ]
 
 
-y_features = ["IRI", "CRACK_INDX", "PCI_2"]
+y_features = ["PRCP"]
 
-headers_arr = []
+# headers_arr = []
+headers_arr = [
+    "TAVG",
+    "AWND",
+    "PRCP"
+]
 
 for header in y_features:
     headers_arr.append(header)
 
 for header in x_features:
     headers_arr.append(header)
+    
+
+print(f"HeadersArr:\n{headers_arr}")
+# data, features_json = get_data.parse_csv(dataloc,
+#                                          features_arr=headers_arr,
+#                                          save_headers=True,
+#                                          )
 
 data, features_json = get_data.parse_csv(dataloc,
-                                         features_arr=headers_arr,
-                                         save_headers=True,
+                                         save_headers=False,
                                          )
+
+
+print(f"DATA:\n{data}")
+print(data.info())
+
+
 data = process_data.remove_empty_cells(data, dtypes=features_json)
-data['years_since_repair'] = 2025 - np.maximum(data['CONYR'], data['RESYR'])
 data.to_csv(os.path.join(parsed_data_dir, "current_data.csv"), index=False)
 # data['composite_target'] = target_data.sum(axis=1)
 
@@ -105,31 +128,25 @@ model_name = "mlpregressor"
 # model_name = "linearregression"
 # Extract full target data from y_1
 target_data = process_data.extract_features(data, feature_conditions=y_features)
-# Use a subset of target columns for PCA
-pca_headers = ["IRI", "CRACK_INDX", "PCI_2"]
-target_pca_subset = target_data[pca_headers]
-target_pca_scaled = preprocessing.StandardScaler().fit_transform(target_pca_subset)
-pca = PCA(n_components=3)
-y_pca = pca.fit_transform(target_pca_scaled)
-
-print(f"Target PCA explained variance ratio: {pca.explained_variance_ratio_}")
 predictor_data = process_data.extract_features(data, feature_conditions=x_features)
+
+
 x_vectors = predictor_data.to_numpy()
 x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)
-y_vectors = y_pca
+y_vectors = target_data
 
-fig = plt.figure(figsize=(8, 6))
-ax = fig.add_subplot(111, projection='3d')
+# fig = plt.figure(figsize=(8, 6))
+# ax = fig.add_subplot(111, projection='3d')
 
-# Use the 3D axes to plot, not plt.scatter
-ax.scatter(y_pca[:, 0], y_pca[:, 1], y_pca[:, 2], c='r', marker='o')
-ax.set_xlabel("Principal Component 1")
-ax.set_ylabel("Principal Component 2")
-ax.set_zlabel("Principal Component 3")
-ax.set_title("3D PCA Projection of Target Data")
-ax.grid(True)
+# # Use the 3D axes to plot, not plt.scatter
+# ax.scatter(y_pca[:, 0], y_pca[:, 1], y_pca[:, 2], c='r', marker='o')
+# ax.set_xlabel("Principal Component 1")
+# ax.set_ylabel("Principal Component 2")
+# ax.set_zlabel("Principal Component 3")
+# ax.set_title("3D PCA Projection of Target Data")
+# ax.grid(True)
 
-plt.show()
+# plt.show()
 
 
 print(f"\n\nModel: {model_name})")

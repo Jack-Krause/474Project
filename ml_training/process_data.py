@@ -71,7 +71,8 @@ def load_data(data_path, write_file=False, write_path=None):
         raise FileNotFoundError("csv file not found")
 
 
-def remove_empty_cells(data, dtypes):
+def remove_empty_cells(data: pd.DataFrame, dtypes: dict[str, str]) -> pd.DataFrame:
+    
     for col, dtype in dtypes.items():
         if 'int' in dtype:
             data[col] = data[col].fillna(0).astype('Int64')

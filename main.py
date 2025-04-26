@@ -124,9 +124,10 @@ model_name = "mlpregressor"
 regression_model = process_data.train_lr_model(x_train, y_train, model_name=model_name)
 
 mse, rmse = process_data.test_lr_model(regression_model, x_test, y_test)
-process_data.plot_lr_results(regression_model, x_test, y_test, target_names=["PRCP"])
-process_data.plot_residuals(regression_model, x_test, y_test, target_names=["PRCP"])
-process_data.plot_learning_curve(regression_model, x_scaled, y_vectors)
+
+# process_data.plot_lr_results(regression_model, x_test, y_test, target_names=["PRCP"])
+# process_data.plot_residuals(regression_model, x_test, y_test, target_names=["PRCP"])
+# process_data.plot_learning_curve(regression_model, x_scaled, y_vectors)
 print("model params", regression_model.get_params())
 
 model_path = os.path.join(models_save_dir, model_name + str(1) + ".skops")

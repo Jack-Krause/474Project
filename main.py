@@ -82,83 +82,50 @@ for header in x_features:
     headers_arr.append(header)
     
 
-print(f"HeadersArr:\n{headers_arr}")
-# data, features_json = get_data.parse_csv(dataloc,
-#                                          features_arr=headers_arr,
-#                                          save_headers=True,
-#                                          )
-
 data, features_json = get_data.parse_csv(dataloc,
-                                         save_headers=False,
+                                         features_arr=headers_arr,
+                                         save_headers=True,
                                          )
+
+# data, features_json = get_data.parse_csv(dataloc,
+#                                          save_headers=False,
+#                                          )
 
 
 print(f"DATA:\n{data}")
 print(data.info())
 
-
 data = process_data.remove_empty_cells(data, dtypes=features_json)
 data.to_csv(os.path.join(parsed_data_dir, "current_data.csv"), index=False)
-# data['composite_target'] = target_data.sum(axis=1)
 
-missing_headers = []
-for header in data.columns:
-    zero_count = 0
-    empty_count = 0
-    for cell in data[header]:
+# Extract full target data from y_1
+target_df = process_data.extract_features(data, feature_conditions=y_features)
+predictor_df = process_data.extract_features(data, feature_conditions=x_features)
 
-        if pd.isna(cell) or cell == "" or cell is None:
-            empty_count += 1
-        if cell == 0 or cell == 0.0:
-            zero_count += 1
+combined = pd.concat([predictor_df, target_df], axis=1).dropna(how="any")
+predictor_df = combined[x_features]
+target_df = combined[y_features]
 
-    missing_headers.append([header, empty_count, zero_count])
+print(f"target data:\n{target_df}")
+print(f"predictor data:{predictor_df}")
 
-missing_headers.sort(key=lambda pt: pt[1] + pt[2], reverse=False)
+x_vectors = predictor_df.to_numpy()   # -> shape is (n_samples, n_features)
+y_vectors = target_df.to_numpy().ravel()   # -> shape is (n_samples, )
 
-header_format = "{:>3}  {:<20}  {:>7}  {:>8}  {:>7}"
-print(header_format.format("No.", "Column", "Total", "Missing", "Zeros"))
-print("-" * 55)
+x_train, x_test, y_train, y_test = train_test_split(
+    x_vectors, y_vectors, test_size=.20, shuffle=True
+)
 
-for i, (header, missing, zero) in enumerate(missing_headers, start=1):
-    total = missing + zero
-    print(header_format.format(i, header, total, missing, zero))
+x_scaled = preprocessing.StandardScaler().fit_transform(x_train)
 
 model_name = "mlpregressor"
 # model_name = "linearregression"
-# Extract full target data from y_1
-target_data = process_data.extract_features(data, feature_conditions=y_features)
-predictor_data = process_data.extract_features(data, feature_conditions=x_features)
-
-
-x_vectors = predictor_data.to_numpy()
-x_scaled = preprocessing.StandardScaler().fit_transform(x_vectors)
-y_vectors = target_data
-
-# fig = plt.figure(figsize=(8, 6))
-# ax = fig.add_subplot(111, projection='3d')
-
-# # Use the 3D axes to plot, not plt.scatter
-# ax.scatter(y_pca[:, 0], y_pca[:, 1], y_pca[:, 2], c='r', marker='o')
-# ax.set_xlabel("Principal Component 1")
-# ax.set_ylabel("Principal Component 2")
-# ax.set_zlabel("Principal Component 3")
-# ax.set_title("3D PCA Projection of Target Data")
-# ax.grid(True)
-
-# plt.show()
-
-
-print(f"\n\nModel: {model_name})")
-
-x_train, x_test, y_train, y_test = train_test_split(
-    x_scaled, y_vectors, test_size=.20, shuffle=True
-)
 
 regression_model = process_data.train_lr_model(x_train, y_train, model_name=model_name)
+
 mse, rmse = process_data.test_lr_model(regression_model, x_test, y_test)
-process_data.plot_lr_results(regression_model, x_test, y_test, target_names=["PC1", "PC2"])
-process_data.plot_residuals(regression_model, x_test, y_test, target_names=["PC1", "PC2"])
+process_data.plot_lr_results(regression_model, x_test, y_test, target_names=["PRCP"])
+process_data.plot_residuals(regression_model, x_test, y_test, target_names=["PRCP"])
 process_data.plot_learning_curve(regression_model, x_scaled, y_vectors)
 print("model params", regression_model.get_params())
 

@@ -72,16 +72,20 @@ def load_data(data_path, write_file=False, write_path=None):
 
 
 def remove_empty_cells(data: pd.DataFrame, dtypes: dict[str, str]) -> pd.DataFrame:
+    data = data.replace("", np.nan)
     
+    cols = list(dtypes.keys())
+    data = data.dropna(subset=cols, how="any")
+
     for col, dtype in dtypes.items():
         if 'int' in dtype:
-            data[col] = data[col].fillna(0).astype('Int64')
+            data[col] = data[col].astype('Int64')
         elif 'float' in dtype:
-            data[col] = data[col].fillna(0.0)
+            data[col] = data[col].astype(float)
         elif dtype == 'bool':
-            data[col] = data[col].fillna(False).astype('bool')
+            data[col] = data[col].astype(bool)
         elif dtype == 'object':
-            data[col] = data[col].replace('', np.nan).fillna('N/A')
+            data[col] = data[col].astype(str)
 
     return data
 

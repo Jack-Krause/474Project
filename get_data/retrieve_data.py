@@ -16,24 +16,25 @@ def parse_csv(path, save_headers=False, features_arr=None, composite_sum=False):
     if os.path.exists(header_path):
         with open(header_path, 'r') as header_file:
             headers_json = json.load(header_file)
-            
-            data = pd.read_csv(path, dtype=headers_json)
-            return data, headers_json
+        
+        if features_arr is not None:
+            dtypes_subset = {col: headers_json[col] for col in features_arr if col in headers_json}
+            df = pd.read_csv(path, usecols=features_arr, dtype=dtypes_subset)
+            return df, dtypes_subset
+        else:
+            df = pd.read_csv(path, dtype=headers_json)
+            return df, headers_json
+    
+    
+    if features_arr is not None:
+        df = pd.read_csv(path, usecols=features_arr) 
     else:
-        data = pd.read_csv(path)
+        df = pd.read_csv(path)
         
-    return data, None
+    return df, None
         
+ 
         
-    
-    
-    
-    
-    
-            
-            
-
-
 def save_headers_json(path, save_path, features_arr=None):
     os.makedirs(save_path, exist_ok=True)
     data = pd.read_csv(path, low_memory=False)

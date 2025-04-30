@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
 from sklearn.neural_network import MLPRegressor
 from sklearn.model_selection import GridSearchCV
+import argparse
 
 
 class SVRWrapper(svm.SVR):
@@ -125,10 +126,7 @@ def train_lr_model(x_train, y_train, model_name=None, pca=False):
     elif model_name.lower() == "linearregression":
         model = linear_model.LinearRegression()
     elif model_name.lower() == "supportvectorregression":
-        model = MultiOutputRegressor(
-            make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
-        )
-        # model = make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
+        model = make_pipeline(StandardScaler(), SVRWrapper(kernel='rbf', C=0.5, epsilon=0.1))
     elif model_name.lower() == "mlpregressor":
         # model_MLP = MLPRegressor(max_iter=1000, random_state=42)
 
@@ -189,8 +187,11 @@ def test_lr_model(model, x_test, y_test):
     return round(mse_error, 3), round(rmse_error, 3)
 
 
-def aggregate_target(y_matrix):
-    pass
+def get_model_args():
+    parser = argparse.ArgumentParser(description='Args for model configuration:')
+    parser.add_argument('-model_name', type=str, default='linearregression', help='regression model name')
+    
+    return parser.parse_args()
 
 
 def plot_lr_results(model, x_test, y_test, target_names=None):

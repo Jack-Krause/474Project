@@ -50,11 +50,8 @@ if not os.path.isdir(models_save_dir):
 if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
-# x_features = [
-#     "TAVG",
-#     "TMIN",
-#     "TMIN"
-# ]
+ml_args = process_data.get_model_args()
+print(f"args:\n{ml_args}")
 
 x_features = [
     "TAVG", # 314 non-null
@@ -118,9 +115,8 @@ x_train, x_test, y_train, y_test = train_test_split(
 
 x_scaled = preprocessing.StandardScaler().fit_transform(x_train)
 
-model_name = "mlpregressor"
-# model_name = "linearregression"
 
+model_name = ml_args.model_name
 regression_model = process_data.train_lr_model(x_train, y_train, model_name=model_name)
 
 mse, rmse = process_data.test_lr_model(regression_model, x_test, y_test)

@@ -35,7 +35,6 @@ def env_variable(key, f=".env", required=True):
 
 # root_dir = os.environ.get("ROOT_DIR")
 root_dir = env_variable("ROOT_DIR")
-print(f"ROOT DIR IS:\n{root_dir}")
 
 dataloc = os.path.join(root_dir, "gsom_data", "USW00003184.csv")
 parsed_data_dir = os.path.join(root_dir, "parsed_data")
@@ -51,7 +50,7 @@ if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
 ml_args = process_data.get_model_args()
-print(f"args:\n{ml_args}")
+print(f"Cmd line args:\n{ml_args}")
 
 x_features = [
     "TAVG", # 314 non-null
@@ -89,8 +88,7 @@ data, features_json = get_data.parse_csv(dataloc,
 #                                          )
 
 
-print(f"DATA:\n{data}")
-print(data.info())
+# print(data.info())
 
 data = process_data.remove_empty_cells(data, dtypes=features_json)
 data.to_csv(os.path.join(parsed_data_dir, "current_data.csv"), index=False)
@@ -103,8 +101,8 @@ combined = pd.concat([predictor_df, target_df], axis=1).dropna(how="any")
 predictor_df = combined[x_features]
 target_df = combined[y_features]
 
-print(f"target data:\n{target_df}")
-print(f"predictor data:{predictor_df}")
+# print(f"target data:\n{target_df}")
+# print(f"predictor data:{predictor_df}")
 
 x_vectors = predictor_df.to_numpy()   # -> shape is (n_samples, n_features)
 y_vectors = target_df.to_numpy().ravel()   # -> shape is (n_samples, )
@@ -114,7 +112,6 @@ x_train, x_test, y_train, y_test = train_test_split(
 )
 
 x_scaled = preprocessing.StandardScaler().fit_transform(x_train)
-
 
 model_name = ml_args.model_name
 regression_model = process_data.train_lr_model(x_train, y_train, model_name=model_name)

@@ -12,4 +12,9 @@ for M in "${MODELS[@]}"; do
 
 done
 
+# open the .log files to see (comment this if not on windows)
+for file in results_*.log; do
+	notepad "$file" &
+done
+
 

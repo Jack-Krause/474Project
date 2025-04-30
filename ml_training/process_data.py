@@ -52,10 +52,10 @@ def load_data(data_path, write_file=False, write_path=None):
             for row in reader:
                 if i == 0:
                     features_array = row
-                    print(f"features: {features_array}")
+                    # print(f"features: {features_array}")
                 else:
                     data.append(row)
-                    print(f"data row: {row}")
+                    # print(f"data row: {row}")
 
                 i += 1
 
@@ -93,10 +93,10 @@ def remove_empty_cells(data: pd.DataFrame, dtypes: dict[str, str]) -> pd.DataFra
 
 def get_selected_features(data_path, features_arr, write_file=False, write_path=None):
     data = []
-    print(f"features chosen: {features_arr}")
+    # print(f"features chosen: {features_arr}")
 
     if os.path.isfile(data_path):
-        print(f"choosing columns: {data_path}")
+        # print(f"choosing columns: {data_path}")
         df = pd.read_csv(data_path, usecols=features_arr)
         data = df.to_numpy()
 
@@ -113,7 +113,7 @@ def separate_sets(data_arr, seed=42):
     split_idx = int(len(data_arr) * 0.80)
     training_arr = data_arr[ :split_idx]
     testing_arr = data_arr[split_idx: ]
-    print(f"training size: {len(training_arr)}, testing size: {len(testing_arr)}")
+    # print(f"training size: {len(training_arr)}, testing size: {len(testing_arr)}")
 
     return training_arr, testing_arr
 
@@ -165,7 +165,7 @@ def train_lr_model(x_train, y_train, model_name=None, pca=False):
         plt.ylabel("Loss")
         plt.grid(True)
         plt.show()
-        print(f" NN params:\n{model.get_params(deep=True)}")
+        # print(f" NN params:\n{model.get_params(deep=True)}")
         return model
 
     else:
@@ -190,6 +190,7 @@ def test_lr_model(model, x_test, y_test):
 def get_model_args():
     parser = argparse.ArgumentParser(description='Args for model configuration:')
     parser.add_argument('-model_name', type=str, default='linearregression', help='regression model name')
+    parser.add_argument('-hidden_layer_sizes')
     
     return parser.parse_args()
 

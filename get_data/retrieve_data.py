@@ -7,8 +7,6 @@ import random
 
 
 def parse_csv(path, save_headers=False, features_arr=None, composite_sum=False):
-    print("path of csv file: " + path)
-
     root_dir = os.environ.get("ROOT_DIR")
     parsed_data_dir = os.path.join(root_dir, "parsed_data")
     header_path = os.path.join(parsed_data_dir, "feature_headers.json")

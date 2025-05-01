@@ -8,23 +8,10 @@ DEFAULTMODEL="mlpregressor"
 
 run_models() {
 	echo "Called run_models"
-	for M in "${MODELS[@]}"; do
-		echo "Running model: $M"
-
-		python main.py \
-			-model_name "$M" \
-			> "results_${M}.log" 2>&1
-	done
 }
 
 run_learning_rates() {
 	echo "Testing Learning Rates"
-	for LR in "${LEARNINGRATES[@]}"; do
-		python main.py
-			-model_name "$DEFAULTMODEL" \
-			-learning_rate "$LR" \
-			> "lr_res_${LR}.log" 2>&1
-	done
 }
 
 case "$1" in

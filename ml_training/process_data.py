@@ -190,7 +190,9 @@ def test_lr_model(model, x_test, y_test):
 def get_model_args():
     parser = argparse.ArgumentParser(description='Args for model configuration:')
     parser.add_argument('-model_name', type=str, default='linearregression', help='regression model name')
-    parser.add_argument('-hidden_layer_sizes')
+    parser.add_argument('-hidden_layer_sizes_w', type=int, default=50, help='hidden layer width')
+    parser.add_argument('-hidden_layer_h', type=int, default=50, help='hidden layer height')
+    parser.add_argument('-learning_rate', type=int, default=0.01, help='learning rate')
     
     return parser.parse_args()
 

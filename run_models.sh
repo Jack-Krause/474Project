@@ -39,8 +39,8 @@ case "$1" in
 		run_learning_rates
 		;;
 	*)
-	echo "Running: $0 [models|lrs|all]"
-	exit 1
+		echo "Possible arguments are: $0 [models|lrs|all] (invalid cmd argument)"
+		exit 1
 	;;
 esac
 
@@ -49,5 +49,6 @@ esac
 for file in results_*.log; do
 	notepad "$file" &
 done
+exit 1
 
 

@@ -26,15 +26,13 @@ case "$1" in
 		run_learning_rates
 		;;
 	*)
-	echo "Running: $0 [models|lrs|all]"
+	echo "arguments are: $0 [models|lrs|all] invalid cmd arg"
 	exit 1
 	;;
 esac
 
 
-# open the .log files to see (comment this if not on windows)
 for file in results_*.log; do
 	notepad "$file" &
 done
-
 

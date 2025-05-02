@@ -17,7 +17,13 @@ def parse_csv(path, save_headers=False, features_arr=None, composite_sum=False):
         
         if features_arr is not None:
             dtypes_subset = {col: headers_json[col] for col in features_arr if col in headers_json}
-            df = pd.read_csv(path, usecols=features_arr, dtype=dtypes_subset)
+            print(f"dtypes:\n{dtypes_subset}")
+            print(f"cols:\n{features_arr}")
+            # df = pd.read_csv(path, usecols=features_arr, dtype=dtypes_subset, encoding_errors='ignore', keep_default_na=False)
+            df = pd.read_csv(path, usecols=features_arr, encoding_errors='ignore')
+            df = df.dropna(subset=dtypes_subset.keys())
+            df = df.astype(dtypes_subset)
+            
             return df, dtypes_subset
         else:
             df = pd.read_csv(path, dtype=headers_json)

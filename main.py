@@ -36,7 +36,7 @@ def env_variable(key, f=".env", required=True):
 # root_dir = os.environ.get("ROOT_DIR")
 root_dir = env_variable("ROOT_DIR")
 
-dataloc = os.path.join(root_dir, "gsom_data", "USW00003184.csv")
+dataloc = os.path.join(root_dir, "gsom_data", "RDU.csv")
 parsed_data_dir = os.path.join(root_dir, "parsed_data")
 models_save_dir = os.path.join(root_dir, "PersistentModels")
 
@@ -83,6 +83,8 @@ data, features_json = get_data.parse_csv(dataloc,
                                          save_headers=True,
                                          )
 
+
+print(f"data:\n{data}")
 # data, features_json = get_data.parse_csv(dataloc,
 #                                          save_headers=False,
 #                                          )

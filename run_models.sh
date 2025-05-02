@@ -13,7 +13,7 @@ run_models() {
 
 		python main.py \
 			-model_name "$M" \
-			> "results_${M}.log" 2>&1
+			> "out/results_${M}.log" 2>&1
 	done
 }
 
@@ -46,7 +46,7 @@ esac
 
 
 # open the .log files to see (comment this if not on windows)
-for file in results_*.log; do
+for file in out/results_*.log; do
 	notepad "$file" &
 done
 exit 1

@@ -114,7 +114,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 x_scaled = preprocessing.StandardScaler().fit_transform(x_train)
 
 model_name = ml_args.model_name
-regression_model = process_data.train_lr_model(x_train, y_train, model_name=model_name)
+regression_model = process_data.train_lr_model(x_train, y_train, args=ml_args)
 
 mse, rmse = process_data.test_lr_model(regression_model, x_test, y_test)
 

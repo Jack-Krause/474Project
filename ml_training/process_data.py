@@ -118,8 +118,11 @@ def separate_sets(data_arr, seed=42):
     return training_arr, testing_arr
 
 
-def train_lr_model(x_train, y_train, model_name=None, pca=False):
+def train_lr_model(x_train, y_train, args=None, pca=False):
     model = None
+    
+    if args:
+        model_name = args.model_name
 
     if model_name is None:
         model = linear_model.LinearRegression()
@@ -147,14 +150,23 @@ def train_lr_model(x_train, y_train, model_name=None, pca=False):
         #                      alpha=0.0001,
         #                      learning_rate_init=0.001
         #                      )
+        # model = MLPRegressor(
+        #     max_iter=2000,
+        #     random_state=42,
+        #     hidden_layer_sizes=(20, 20),
+        #     early_stopping=True,
+        #     activation='relu',
+        #     alpha=0.0001,
+        #     learning_rate_init=0.001
+        # )
         model = MLPRegressor(
             max_iter=2000,
             random_state=42,
-            hidden_layer_sizes=(20, 20),
+            hidden_layer_sizes=(args.hidden_layer_w, args.hidden_layer_h),
             early_stopping=True,
-            activation='relu',
-            alpha=0.0001,
-            learning_rate_init=0.001
+            activation=args.activation,
+            alpha=args.alpha,
+            learning_rate_init=args.learning_rate
         )
         model.fit(x_train, y_train)
 
@@ -190,9 +202,11 @@ def test_lr_model(model, x_test, y_test):
 def get_model_args():
     parser = argparse.ArgumentParser(description='Args for model configuration:')
     parser.add_argument('-model_name', type=str, default='linearregression', help='regression model name')
-    parser.add_argument('-hidden_layer_sizes_w', type=int, default=50, help='hidden layer width')
+    parser.add_argument('-activation', type=str, default='relu', help='NN activation function')
+    parser.add_argument('-hidden_layer_w', type=int, default=50, help='hidden layer width')
     parser.add_argument('-hidden_layer_h', type=int, default=50, help='hidden layer height')
-    parser.add_argument('-learning_rate', type=int, default=0.01, help='learning rate')
+    parser.add_argument('-learning_rate', type=float, default=0.01, help='learning rate')
+    parser.add_argument('-alpha', type=float, default=0.0001, help='nn alpha hyper param')
     
     return parser.parse_args()
 

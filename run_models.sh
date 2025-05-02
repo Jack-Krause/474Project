@@ -20,7 +20,7 @@ run_models() {
 run_learning_rates() {
 	echo "Testing Learning Rates"
 	for LR in "${LEARNINGRATES[@]}"; do
-		python main.py
+		python main.py \
 			-model_name "$DEFAULTMODEL" \
 			-learning_rate "$LR" \
 			> "lr_res_${LR}.log" 2>&1

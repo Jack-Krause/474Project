@@ -84,7 +84,6 @@ data, features_json = get_data.parse_csv(dataloc,
                                          )
 
 
-print(f"data:\n{data}")
 # data, features_json = get_data.parse_csv(dataloc,
 #                                          save_headers=False,
 #                                          )

@@ -1,6 +1,0 @@
-4/10 results
-Model: mlpregressor, MSE: 1.277, RMSE: 1.129
-Model: (x features: model: linearregression)
-Model: linearregression, MSE: 1.821, RMSE: 1.348
-Model: (x features: model: supportvectorregression)
-Model: supportvectorregression, MSE: 1.474, RMSE: 1.213

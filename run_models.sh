@@ -5,6 +5,7 @@ MODELS=("linearregression" "supportvectorregression" "mlpregressor")
 HIDDENLAYERSIZES=(10 20 40 50)
 LEARNINGRATES=(0.01 0.001 0.0001 0.00001)
 DEFAULTMODEL="mlpregressor"
+ACTIVATION=("relu" "tanh" "sigmoid")
 
 run_models() {
 	echo "Called run_models"
@@ -23,7 +24,7 @@ run_learning_rates() {
 		python main.py \
 			-model_name "$DEFAULTMODEL" \
 			-learning_rate "$LR" \
-			> "lr_res_${LR}.log" 2>&1
+			> "out/lr_res_${LR}.log" 2>&1
 	done
 }
 

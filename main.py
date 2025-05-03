@@ -91,7 +91,7 @@ for col in all_data.columns:
     else:
         good_cols.append(col)
 
-print(f"least-empty columns are:\n{good_cols}")
+# print(f"least-empty columns are:\n{good_cols}")
 if not good_cols:
     raise ValueError("List cannot be None")
 
@@ -102,17 +102,14 @@ selected_data = pd.read_csv(
         usecols=good_cols
 )
 
-
-
 selected_data = selected_data.select_dtypes('number')
 selected_dt = selected_data.dtypes.apply(lambda dt: dt.name).to_dict()
-
 selected_data = process_data.remove_empty_cells(selected_data, selected_dt)
+
 if len(selected_data) > 0:
     print("getting COV matrix")
-    print(f"data d types:\n{selected_data.dtypes}")
     covariance_matrix = covariance_analysis.calculate_plot_covariance(selected_data, title="Correlation for all data")
-    print(covariance_matrix)
+    covariance_analysis.hierarchical_clustering(covariance_matrix)
 else:
     print("data matrix is empty")
 

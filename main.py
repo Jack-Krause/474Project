@@ -116,6 +116,9 @@ if len(selected_data) > 0:
 else:
     print("data matrix is empty")
 
+# find correlation with target variable
+
+
 exit()
 
 

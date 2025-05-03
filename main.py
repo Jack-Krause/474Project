@@ -111,7 +111,6 @@ selected_data = process_data.remove_empty_cells(selected_data, selected_dt)
 if len(selected_data) > 0:
     print("getting COV matrix")
     print(f"data d types:\n{selected_data.dtypes}")
-    exit()
     covariance_matrix = covariance_analysis.calculate_plot_covariance(selected_data, title="Correlation for all data")
     print(covariance_matrix)
 else:

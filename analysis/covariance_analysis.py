@@ -25,11 +25,11 @@ def calculate_plot_covariance(data, title=None):
     mask = high_corrs.index.get_level_values(0) != high_corrs.index.get_level_values(1)
     high_corrs = high_corrs[mask]
 
-    # high_corrs = high_corrs[abs(high_corrs) > 0.75].reset_index()
-    high_corrs = high_corrs[abs(high_corrs) > 0.50].reset_index()
+    high_corrs = high_corrs[abs(high_corrs) > 0.75].reset_index()
     high_corrs.columns = ['Var1', 'Var2', 'Correlation']
     high_corrs = high_corrs.sort_values(by='Correlation', ascending=False)
     print(f"features with high correlation:\n{high_corrs}")
+    high_corrs.to_csv("correlations.csv", index=False)
 
 
 

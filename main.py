@@ -77,21 +77,41 @@ for header in y_features:
 for header in x_features:
     headers_arr.append(header)
     
+# all_data = get_data.parse_csv(dataloc)
+good_cols = []
+
+all_data = pd.read_csv(dataloc, encoding_errors='ignore', low_memory=False)
+for col in all_data.columns:
+    empty_rows = all_data[all_data[col].isnull()]
+
+    if not empty_rows.empty:
+        if len(empty_rows) < 75:
+            good_cols.append(col)
+    else:
+        good_cols.append(col)
+
+print(f"least-empty columns are:\n{good_cols}")
+if not good_cols:
+    raise 
+exit()
+
+
+dt_all = all_data.dtypes.apply(lambda dt: dt.name).to_dict()
+
+all_data = process_data.remove_empty_cells(all_data, dt_all)
+if len(all_data) > 0:
+    print("getting COV matrix")
+    covariance_matrix = covariance_analysis.calculate_plot_covariance(all_data, title="Correlation for all data")
+    print(covariance_matrix)
+else:
+    print("data matrix is empty")
+
+
 
 data, features_json = get_data.parse_csv(dataloc,
                                          features_arr=headers_arr,
                                          save_headers=True,
                                          )
-
-
-# data, features_json = get_data.parse_csv(dataloc,
-#                                          save_headers=False,
-#                                          )
-
-
-# print(data.info())
-
-data = process_data.remove_empty_cells(data, dtypes=features_json)
 data.to_csv(os.path.join(parsed_data_dir, "current_data.csv"), index=False)
 
 # Extract full target data from y_1

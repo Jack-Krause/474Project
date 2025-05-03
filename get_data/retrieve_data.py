@@ -6,12 +6,12 @@ import json
 import random
 
 
-def parse_csv(path, save_headers=False, features_arr=None, composite_sum=False):
+def parse_csv(path, save_headers=False, features_arr=None, composite_sum=False, use_headers=True):
     root_dir = os.environ.get("ROOT_DIR")
     parsed_data_dir = os.path.join(root_dir, "parsed_data")
     header_path = os.path.join(parsed_data_dir, "feature_headers.json")
     
-    if os.path.exists(header_path):
+    if os.path.exists(header_path) and use_headers:
         with open(header_path, 'r') as header_file:
             headers_json = json.load(header_file)
         

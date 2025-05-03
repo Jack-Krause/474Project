@@ -74,7 +74,6 @@ def load_data(data_path, write_file=False, write_path=None):
 
 def remove_empty_cells(data: pd.DataFrame, dtypes: dict[str, str]) -> pd.DataFrame:
     data = data.replace("", np.nan)
-    
     cols = list(dtypes.keys())
     data = data.dropna(subset=cols, how="any")
 

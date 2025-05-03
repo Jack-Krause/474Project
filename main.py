@@ -77,10 +77,11 @@ for header in y_features:
 for header in x_features:
     headers_arr.append(header)
     
+# begin data analysis stuff
 # all_data = get_data.parse_csv(dataloc)
 good_cols = []
-
 all_data = pd.read_csv(dataloc, encoding_errors='ignore', low_memory=False)
+
 for col in all_data.columns:
     empty_rows = all_data[all_data[col].isnull()]
 
@@ -92,19 +93,31 @@ for col in all_data.columns:
 
 print(f"least-empty columns are:\n{good_cols}")
 if not good_cols:
-    raise 
-exit()
+    raise ValueError("List cannot be None")
+
+selected_data = pd.read_csv(
+        dataloc,
+        encoding_errors='ignore',
+        low_memory=False,
+        usecols=good_cols
+)
 
 
-dt_all = all_data.dtypes.apply(lambda dt: dt.name).to_dict()
 
-all_data = process_data.remove_empty_cells(all_data, dt_all)
-if len(all_data) > 0:
+selected_data = selected_data.select_dtypes('number')
+selected_dt = selected_data.dtypes.apply(lambda dt: dt.name).to_dict()
+
+selected_data = process_data.remove_empty_cells(selected_data, selected_dt)
+if len(selected_data) > 0:
     print("getting COV matrix")
-    covariance_matrix = covariance_analysis.calculate_plot_covariance(all_data, title="Correlation for all data")
+    print(f"data d types:\n{selected_data.dtypes}")
+    exit()
+    covariance_matrix = covariance_analysis.calculate_plot_covariance(selected_data, title="Correlation for all data")
     print(covariance_matrix)
 else:
     print("data matrix is empty")
+
+exit()
 
 
 

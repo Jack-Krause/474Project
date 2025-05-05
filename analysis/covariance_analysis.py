@@ -30,7 +30,7 @@ def calculate_plot_covariance(data, title=None):
     return correlation_matrix
 
 
-def hierarchical_clustering(corr):
+def hierarchical_clustering(corr, corr_threshold=0.3):
     corr = corr.fillna(0).abs()
 
     dist_matrix = 1 - corr
@@ -39,7 +39,7 @@ def hierarchical_clustering(corr):
 
     condensed_dist = squareform(dist_matrix.values, checks=False)
     linkage_matrix = linkage(condensed_dist, method='average')
-    corr_threshold = 0.3   # correlation >= 0.7
+    # corr_threshold = 0.3   # correlation >= 0.7
 
     cluster_labels = fcluster(
             linkage_matrix, 

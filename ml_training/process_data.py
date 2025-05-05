@@ -206,6 +206,7 @@ def get_model_args():
     parser.add_argument('-hidden_layer_h', type=int, default=50, help='hidden layer height')
     parser.add_argument('-learning_rate', type=float, default=0.01, help='learning rate')
     parser.add_argument('-alpha', type=float, default=0.0001, help='nn alpha hyper param')
+    parser.add_argument('-clustering_threshold', type=float, default=0.3, help='hier correlation')
     
     return parser.parse_args()
 

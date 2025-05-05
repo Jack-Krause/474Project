@@ -50,6 +50,9 @@ if not os.path.isfile(dataloc):
     raise FileNotFoundError(f"file not found: {dataloc}")
 
 ml_args = process_data.get_model_args()
+if not ml_args:
+    raise ValueError("arguments not found.")
+    
 print(f"Cmd line args:\n{ml_args}")
 
 x_features = [
@@ -110,7 +113,7 @@ if selected_data is None:
     
 
 covariance_matrix = covariance_analysis.calculate_plot_covariance(selected_data, title="Correlation for all data")
-clusters = covariance_analysis.hierarchical_clustering(covariance_matrix)
+clusters = covariance_analysis.hierarchical_clustering(covariance_matrix, corr_threshold=ml_args.clustering_threshold)
 X_pca = covariance_analysis.cluster_pca(clusters, selected_data, n_components=1)
 print(X_pca)
 x_features = X_pca.keys()

@@ -110,6 +110,9 @@ selected_data = process_data.remove_empty_cells(selected_data, selected_dt)
 
 if selected_data is None:
     raise ValueError("data not loaded correctly")
+
+target_df = process_data.extract_features(selected_data, feature_conditions=y_features)
+selected_data = selected_data.drop(columns=y_features, errors='ignore')
     
 
 covariance_matrix = covariance_analysis.calculate_plot_covariance(selected_data, title="Correlation for all data")
@@ -120,7 +123,6 @@ x_features = X_pca.keys()
 # print(x_features)
 
 # Extract full target data from y_1
-target_df = process_data.extract_features(selected_data, feature_conditions=y_features)
 combined = pd.concat([X_pca, target_df], axis=1).dropna(how="any")
 predictor_df = combined[x_features]
 target_df = combined[y_features]

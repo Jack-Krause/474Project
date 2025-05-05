@@ -2,10 +2,12 @@ from sklearn import covariance
 from scipy.spatial.distance import squareform
 from scipy.cluster.hierarchy import linkage, dendrogram
 from scipy.cluster.hierarchy import fcluster
+from sklearn.decomposition import PCA
 import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from typing import List
 
 
 def calculate_plot_covariance(data, title=None):
@@ -63,7 +65,23 @@ def hierarchical_clustering(corr):
 
 
 
-# def cluster_pca()
+def cluster_pca(clusters: List[List[str]], data: pd.DataFrame, n_components: int = 1) -> None:
+    transformed_data = pd.DataFrame(index=data.index)
+
+    for cluster_num, features in enumerate(clusters, start=1):
+        if len(features) == 1:
+            transformed_data[f'Cluster_{cluster_num}'] = data[features[0]]
+
+        else:
+            cluster_data = data[features].dropna()
+            pca = PCA(n_components=n_components)
+            pc = pca.fit_transform(cluster_data)
+            transformed_data[f'Cluster_{cluster_num}'] = pc[:, 0]
+
+    return transformed_data
+    
+    
+    
 
 
 

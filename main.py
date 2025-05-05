@@ -110,7 +110,9 @@ if selected_data is None:
     
 
 covariance_matrix = covariance_analysis.calculate_plot_covariance(selected_data, title="Correlation for all data")
-covariance_analysis.hierarchical_clustering(covariance_matrix)
+clusters = covariance_analysis.hierarchical_clustering(covariance_matrix)
+# X_pca = cluster_pca(clusters, selected_data)
+# model.fit(X_pca, y)
 
 exit(0)
 

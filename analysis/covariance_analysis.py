@@ -45,14 +45,25 @@ def hierarchical_clustering(corr):
             criterion='distance'
             )
 
-    
+    cluster_dict = {}
+    for feature, label in zip(corr.columns, cluster_labels):
+        if label not in cluster_dict:
+            cluster_dict[label] = []
 
-    feature_groups = dict(zip(corr.columns, cluster_labels))
-    for cluster_id in sorted(set(feature_groups.values())):
-        members = [feature for feature, cid in feature_groups.items() if cid == cluster_id]
-        if len(members) > 1:
-            print(f"Group {cluster_id}: {members}")
-    # print(f"clustering groups:\n{feature_groups}")
+        cluster_dict[label].append(feature)
+
+    cluster_list = list(cluster_dict.values())
+    cluster_list = [group for group in cluster_list if len(group) > 1]
+
+    print(f"\nFeature Clusters (threshold={corr_threshold}):")
+    for i, group in enumerate(cluster_list, start=1):
+        print(f"Group {i}: {group}")
+
+    return cluster_list
+
+
+
+# def cluster_pca()
 
 
 

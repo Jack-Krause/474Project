@@ -113,26 +113,17 @@ covariance_matrix = covariance_analysis.calculate_plot_covariance(selected_data,
 clusters = covariance_analysis.hierarchical_clustering(covariance_matrix)
 X_pca = covariance_analysis.cluster_pca(clusters, selected_data, n_components=1)
 print(X_pca)
-# model.fit(X_pca, y)
-
-exit(0)
-
-data, features_json = get_data.parse_csv(dataloc,
-                                         features_arr=headers_arr,
-                                         save_headers=True,
-                                         )
-data.to_csv(os.path.join(parsed_data_dir, "current_data.csv"), index=False)
+x_features = X_pca.keys()
+print(x_features)
 
 # Extract full target data from y_1
-target_df = process_data.extract_features(data, feature_conditions=y_features)
-predictor_df = process_data.extract_features(data, feature_conditions=x_features)
-
-combined = pd.concat([predictor_df, target_df], axis=1).dropna(how="any")
+target_df = process_data.extract_features(selected_data, feature_conditions=y_features)
+combined = pd.concat([X_pca, target_df], axis=1).dropna(how="any")
 predictor_df = combined[x_features]
 target_df = combined[y_features]
+print(f"target data:\n{target_df}")
+print(f"predictor data:{predictor_df}")
 
-# print(f"target data:\n{target_df}")
-# print(f"predictor data:{predictor_df}")
 
 x_vectors = predictor_df.to_numpy()   # -> shape is (n_samples, n_features)
 y_vectors = target_df.to_numpy().ravel()   # -> shape is (n_samples, )

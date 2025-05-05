@@ -1,0 +1,99 @@
+TESTING ACTIVATION FUNCTIONS
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.3, activation_function='relu')
+model params {'activation': 'relu', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 6890.243, RMSE: 83.007
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.3, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 2461.11, RMSE: 49.61
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.3, activation_function='logistic')
+model params {'activation': 'logistic', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 2641.477, RMSE: 51.395
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.3, activation_function='identity')
+model params {'activation': 'identity', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 9964.257, RMSE: 99.821
+
+
+TESTING ACTIVATION FUNCTIONS
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.2, activation_function='relu')
+model params {'activation': 'relu', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 53273.895, RMSE: 230.811
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.2, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 2841.875, RMSE: 53.309
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.2, activation_function='logistic')
+model params {'activation': 'logistic', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 2061.246, RMSE: 45.401
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.2, activation_function='identity')
+model params {'activation': 'identity', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 9801.01, RMSE: 99.0
+
+
+TESTING ACTIVATION FUNCTIONS
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.1, activation_function='relu')
+model params {'activation': 'relu', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 4
+Model: mlpregressor, MSE: 4909.961, RMSE: 70.071
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.1, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 4
+Model: mlpregressor, MSE: 2613.89, RMSE: 51.126
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.1, activation_function='logistic')
+model params {'activation': 'logistic', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 4
+Model: mlpregressor, MSE: 3239.983, RMSE: 56.921
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.1, activation_function='identity')
+model params {'activation': 'identity', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 4
+Model: mlpregressor, MSE: 10689.143, RMSE: 103.388
+
+

@@ -1,6 +1,0 @@
-forrtl: error (200): program aborting due to control-C event
-Image              PC                Routine            Line        Source             
-libifcoremd.dll    00007FFE3C1CDF54  Unknown               Unknown  Unknown
-KERNELBASE.dll     00007FFEA92EC46D  Unknown               Unknown  Unknown
-KERNEL32.DLL       00007FFEAA10E8D7  Unknown               Unknown  Unknown
-ntdll.dll          00007FFEABD914FC  Unknown               Unknown  Unknown

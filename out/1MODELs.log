@@ -1,0 +1,75 @@
+TESTING THREE MODELS
+--------------------
+Model type: linearregression
+Run arguments: Namespace(model_name='linearregression', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.3, activation_function='tanh')
+model params {'copy_X': True, 'fit_intercept': True, 'n_jobs': None, 'positive': False}
+number of clusters: 5
+Model: linearregression, MSE: 1464.444, RMSE: 38.268
+
+
+--------------------
+Model type: supportvectorregression
+Run arguments: Namespace(model_name='supportvectorregression', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.3, activation_function='tanh')
+model params {'memory': None, 'steps': [('standardscaler', StandardScaler()), ('svrwrapper', SVRWrapper(C=0.5))], 'transform_input': None, 'verbose': False, 'standardscaler': StandardScaler(), 'svrwrapper': SVRWrapper(C=0.5), 'standardscaler__copy': True, 'standardscaler__with_mean': True, 'standardscaler__with_std': True, 'svrwrapper__C': 0.5, 'svrwrapper__cache_size': 200, 'svrwrapper__coef0': 0.0, 'svrwrapper__degree': 3, 'svrwrapper__epsilon': 0.1, 'svrwrapper__gamma': 'scale', 'svrwrapper__kernel': 'rbf', 'svrwrapper__max_iter': -1, 'svrwrapper__shrinking': True, 'svrwrapper__tol': 0.001, 'svrwrapper__verbose': False}
+number of clusters: 5
+Model: supportvectorregression, MSE: 1298.755, RMSE: 36.038
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.3, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 2221.807, RMSE: 47.136
+
+
+TESTING THREE MODELS
+--------------------
+Model type: linearregression
+Run arguments: Namespace(model_name='linearregression', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.2, activation_function='tanh')
+model params {'copy_X': True, 'fit_intercept': True, 'n_jobs': None, 'positive': False}
+number of clusters: 5
+Model: linearregression, MSE: 2549.749, RMSE: 50.495
+
+
+--------------------
+Model type: supportvectorregression
+Run arguments: Namespace(model_name='supportvectorregression', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.2, activation_function='tanh')
+model params {'memory': None, 'steps': [('standardscaler', StandardScaler()), ('svrwrapper', SVRWrapper(C=0.5))], 'transform_input': None, 'verbose': False, 'standardscaler': StandardScaler(), 'svrwrapper': SVRWrapper(C=0.5), 'standardscaler__copy': True, 'standardscaler__with_mean': True, 'standardscaler__with_std': True, 'svrwrapper__C': 0.5, 'svrwrapper__cache_size': 200, 'svrwrapper__coef0': 0.0, 'svrwrapper__degree': 3, 'svrwrapper__epsilon': 0.1, 'svrwrapper__gamma': 'scale', 'svrwrapper__kernel': 'rbf', 'svrwrapper__max_iter': -1, 'svrwrapper__shrinking': True, 'svrwrapper__tol': 0.001, 'svrwrapper__verbose': False}
+number of clusters: 5
+Model: supportvectorregression, MSE: 3423.063, RMSE: 58.507
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.2, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 2600.547, RMSE: 50.996
+
+
+TESTING THREE MODELS
+--------------------
+Model type: linearregression
+Run arguments: Namespace(model_name='linearregression', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.1, activation_function='tanh')
+model params {'copy_X': True, 'fit_intercept': True, 'n_jobs': None, 'positive': False}
+number of clusters: 4
+Model: linearregression, MSE: 3205.795, RMSE: 56.62
+
+
+--------------------
+Model type: supportvectorregression
+Run arguments: Namespace(model_name='supportvectorregression', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.1, activation_function='tanh')
+model params {'memory': None, 'steps': [('standardscaler', StandardScaler()), ('svrwrapper', SVRWrapper(C=0.5))], 'transform_input': None, 'verbose': False, 'standardscaler': StandardScaler(), 'svrwrapper': SVRWrapper(C=0.5), 'standardscaler__copy': True, 'standardscaler__with_mean': True, 'standardscaler__with_std': True, 'svrwrapper__C': 0.5, 'svrwrapper__cache_size': 200, 'svrwrapper__coef0': 0.0, 'svrwrapper__degree': 3, 'svrwrapper__epsilon': 0.1, 'svrwrapper__gamma': 'scale', 'svrwrapper__kernel': 'rbf', 'svrwrapper__max_iter': -1, 'svrwrapper__shrinking': True, 'svrwrapper__tol': 0.001, 'svrwrapper__verbose': False}
+number of clusters: 4
+Model: supportvectorregression, MSE: 2279.047, RMSE: 47.739
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.1, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 4
+Model: mlpregressor, MSE: 2610.375, RMSE: 51.092
+
+

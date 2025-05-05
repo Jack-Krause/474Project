@@ -1,0 +1,105 @@
+TESTING LEARNING RATES
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.3, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 3080.294, RMSE: 55.5
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.001, alpha=0.0001, clustering_threshold=0.3, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.001, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 4277.585, RMSE: 65.403
+
+
+C:\Users\jackm\anaconda3\envs\ml_b\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:691: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (2000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.0001, alpha=0.0001, clustering_threshold=0.3, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.0001, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 7783.488, RMSE: 88.224
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=1e-05, alpha=0.0001, clustering_threshold=0.3, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 1e-05, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 11614.724, RMSE: 107.772
+
+
+TESTING LEARNING RATES
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.2, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 2628.837, RMSE: 51.272
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.001, alpha=0.0001, clustering_threshold=0.2, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.001, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 2790.006, RMSE: 52.821
+
+
+C:\Users\jackm\anaconda3\envs\ml_b\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:691: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (2000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.0001, alpha=0.0001, clustering_threshold=0.2, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.0001, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 5388.993, RMSE: 73.41
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=1e-05, alpha=0.0001, clustering_threshold=0.2, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 1e-05, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 5
+Model: mlpregressor, MSE: 11556.001, RMSE: 107.499
+
+
+TESTING LEARNING RATES
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.1, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 4
+Model: mlpregressor, MSE: 3781.045, RMSE: 61.49
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.001, alpha=0.0001, clustering_threshold=0.1, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.001, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 4
+Model: mlpregressor, MSE: 2536.995, RMSE: 50.369
+
+
+C:\Users\jackm\anaconda3\envs\ml_b\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:691: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (2000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.0001, alpha=0.0001, clustering_threshold=0.1, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 0.0001, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 4
+Model: mlpregressor, MSE: 6124.351, RMSE: 78.258
+
+
+--------------------
+Model type: mlpregressor
+Run arguments: Namespace(model_name='mlpregressor', hidden_layer_w=50, hidden_layer_h=50, learning_rate=1e-05, alpha=0.0001, clustering_threshold=0.1, activation_function='tanh')
+model params {'activation': 'tanh', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': True, 'epsilon': 1e-08, 'hidden_layer_sizes': (50, 50), 'learning_rate': 'constant', 'learning_rate_init': 1e-05, 'max_fun': 15000, 'max_iter': 2000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 42, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}
+number of clusters: 4
+Model: mlpregressor, MSE: 13151.875, RMSE: 114.682
+
+

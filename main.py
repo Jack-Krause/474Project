@@ -15,6 +15,7 @@ import pandas as pd
 import dotenv
 
 
+
 def env_variable(key, f=".env", required=True):
     value = os.environ.get(key)
     if value is not None:
@@ -53,7 +54,6 @@ ml_args = process_data.get_model_args()
 if not ml_args:
     raise ValueError("arguments not found.")
     
-print(f"Cmd line args:\n{ml_args}")
 
 x_features = [
     "TAVG", # 314 non-null
@@ -145,9 +145,18 @@ mse, rmse = process_data.test_lr_model(regression_model, x_test, y_test)
 # process_data.plot_lr_results(regression_model, x_test, y_test, target_names=["PRCP"])
 # process_data.plot_residuals(regression_model, x_test, y_test, target_names=["PRCP"])
 # process_data.plot_learning_curve(regression_model, x_scaled, y_vectors)
-print("model params", regression_model.get_params())
+
 
 model_path = os.path.join(models_save_dir, model_name + str(1) + ".skops")
 dump(regression_model, model_path)
 
-print(f"Model: {model_name}, MSE: {mse}, RMSE: {rmse}\n")
+print("-"*20)
+print(f"Model type: {model_name}")
+print(f"Run arguments: {ml_args}")
+print("model params", regression_model.get_params())
+print(f"number of clusters: {len(clusters)}")
+print(f"Model: {model_name}, MSE: {mse}, RMSE: {rmse}")
+print("\n")
+
+
+

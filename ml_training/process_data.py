@@ -163,7 +163,7 @@ def train_lr_model(x_train, y_train, args=None, pca=False):
             random_state=42,
             hidden_layer_sizes=(args.hidden_layer_w, args.hidden_layer_h),
             early_stopping=True,
-            activation=args.activation,
+            activation=args.activation_function,
             alpha=args.alpha,
             learning_rate_init=args.learning_rate
         )
@@ -201,12 +201,12 @@ def test_lr_model(model, x_test, y_test):
 def get_model_args():
     parser = argparse.ArgumentParser(description='Args for model configuration:')
     parser.add_argument('-model_name', type=str, default='linearregression', help='regression model name')
-    parser.add_argument('-activation', type=str, default='relu', help='NN activation function')
     parser.add_argument('-hidden_layer_w', type=int, default=50, help='hidden layer width')
     parser.add_argument('-hidden_layer_h', type=int, default=50, help='hidden layer height')
     parser.add_argument('-learning_rate', type=float, default=0.01, help='learning rate')
     parser.add_argument('-alpha', type=float, default=0.0001, help='nn alpha hyper param')
     parser.add_argument('-clustering_threshold', type=float, default=0.3, help='hier correlation')
+    parser.add_argument('-activation_function', type=str, default='tanh', help='MLPregressor activation f')
     
     return parser.parse_args()
 

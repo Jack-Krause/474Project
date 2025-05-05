@@ -1,0 +1,5 @@
+Cmd line args:
+Namespace(model_name='supportvectorregression', activation='relu', hidden_layer_w=50, hidden_layer_h=50, learning_rate=0.01, alpha=0.0001, clustering_threshold=0.3)
+model params {'memory': None, 'steps': [('standardscaler', StandardScaler()), ('svrwrapper', SVRWrapper(C=0.5))], 'transform_input': None, 'verbose': False, 'standardscaler': StandardScaler(), 'svrwrapper': SVRWrapper(C=0.5), 'standardscaler__copy': True, 'standardscaler__with_mean': True, 'standardscaler__with_std': True, 'svrwrapper__C': 0.5, 'svrwrapper__cache_size': 200, 'svrwrapper__coef0': 0.0, 'svrwrapper__degree': 3, 'svrwrapper__epsilon': 0.1, 'svrwrapper__gamma': 'scale', 'svrwrapper__kernel': 'rbf', 'svrwrapper__max_iter': -1, 'svrwrapper__shrinking': True, 'svrwrapper__tol': 0.001, 'svrwrapper__verbose': False}
+Model: supportvectorregression, MSE: 893.212, RMSE: 29.887
+

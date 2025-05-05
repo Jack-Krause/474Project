@@ -115,17 +115,17 @@ if selected_data is None:
 covariance_matrix = covariance_analysis.calculate_plot_covariance(selected_data, title="Correlation for all data")
 clusters = covariance_analysis.hierarchical_clustering(covariance_matrix, corr_threshold=ml_args.clustering_threshold)
 X_pca = covariance_analysis.cluster_pca(clusters, selected_data, n_components=1)
-print(X_pca)
+# print(X_pca)
 x_features = X_pca.keys()
-print(x_features)
+# print(x_features)
 
 # Extract full target data from y_1
 target_df = process_data.extract_features(selected_data, feature_conditions=y_features)
 combined = pd.concat([X_pca, target_df], axis=1).dropna(how="any")
 predictor_df = combined[x_features]
 target_df = combined[y_features]
-print(f"target data:\n{target_df}")
-print(f"predictor data:{predictor_df}")
+# print(f"target data:\n{target_df}")
+# print(f"predictor data:{predictor_df}")
 
 
 x_vectors = predictor_df.to_numpy()   # -> shape is (n_samples, n_features)

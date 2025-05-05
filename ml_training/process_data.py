@@ -169,13 +169,13 @@ def train_lr_model(x_train, y_train, args=None, pca=False):
         )
         model.fit(x_train, y_train)
 
-        plt.figure(figsize=(8, 6))
-        plt.plot(model.loss_curve_, marker='o')
-        plt.title("MLPRegressor Training Loss Curve")
-        plt.xlabel("Iteration")
-        plt.ylabel("Loss")
-        plt.grid(True)
-        plt.show()
+        # plt.figure(figsize=(8, 6))
+        # plt.plot(model.loss_curve_, marker='o')
+        # plt.title("MLPRegressor Training Loss Curve")
+        # plt.xlabel("Iteration")
+        # plt.ylabel("Loss")
+        # plt.grid(True)
+        # plt.show()
         # print(f" NN params:\n{model.get_params(deep=True)}")
         return model
 

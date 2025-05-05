@@ -26,7 +26,7 @@ def calculate_plot_covariance(data, title=None):
     high_corrs.columns = ['Var1', 'Var2', 'Correlation']
     high_corrs = high_corrs.sort_values(by='Correlation', ascending=False)
 
-    print(f"features with high correlation:\n{high_corrs}")
+    # print(f"features with high correlation:\n{high_corrs}")
     return correlation_matrix
 
 
@@ -57,9 +57,9 @@ def hierarchical_clustering(corr, corr_threshold=0.3):
     cluster_list = list(cluster_dict.values())
     cluster_list = [group for group in cluster_list if len(group) > 1]
 
-    print(f"\nFeature Clusters (threshold={corr_threshold}):")
-    for i, group in enumerate(cluster_list, start=1):
-        print(f"Group {i}: {group}")
+    # print(f"\nFeature Clusters (threshold={corr_threshold}):")
+    # for i, group in enumerate(cluster_list, start=1):
+    #     print(f"Group {i}: {group}")
 
     return cluster_list
 

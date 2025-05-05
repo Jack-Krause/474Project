@@ -239,7 +239,6 @@ def plot_lr_results(model, x_test, y_test, target_names=None):
         min_val = min(y_test[:, i].min(), y_pred[:, i].min())
         max_val = max(y_test[:, i].max(), y_pred[:, i].max())
         ax.plot([min_val, max_val], [min_val, max_val], 'r--', lw=2, label="Perfect Prediction")
-
         # Best-fit line
         coeffs = np.polyfit(y_test[:, i], y_pred[:, i], 1)
         best_fit = np.poly1d(coeffs)
